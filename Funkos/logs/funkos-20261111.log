@@ -167,3 +167,10 @@ HotChocolate.SchemaException: For more details look at the `Errors` property.
    at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.StartAsync(CancellationToken cancellationToken)
    at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
    at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-11 17:53:41.041 +01:00 [INF] Usuario admin encontrado
+2026-11-11 17:53:42.963 +01:00 [INF] Usuario admin con inicio de sesion el "2026-11-11T16:53:41.8725962Z"
+2026-11-11 18:14:58.890 +01:00 [INF] Usuario admin encontrado
+2026-11-11 18:14:59.088 +01:00 [WRN] Contraseña incorrecta del usuario
+2026-11-11 18:15:10.556 +01:00 [WRN] Credenciales invalidas del usuario
+2026-11-11 18:17:01.830 +01:00 [INF] Usuario admin encontrado
+2026-11-11 18:17:01.939 +01:00 [INF] Usuario admin con inicio de sesion el "2026-11-11T17:17:01.9233104Z"

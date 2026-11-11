@@ -100,7 +100,7 @@ app.UseMiddleware<RateLimitMiddleware>();
 app.UseCors("Clientes");
 
 // Endpoint GraphQL
-app.MapGraphQL();
+app.MapGraphQL("/graphql");
 
 app.MapControllers();
 app.Run();
