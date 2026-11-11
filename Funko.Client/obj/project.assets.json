@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "targets": {
     "net10.0": {
       "Microsoft.AspNetCore.App.Internal.Assets/10.0.12": {
@@ -2086,19 +2086,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Marcos\\.nuget\\packages\\": {}
+    "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funko.Client\\Funko.Client.csproj",
+      "projectUniqueName": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funko.Client\\Funko.Client.csproj",
       "projectName": "Funko.Client",
-      "projectPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funko.Client\\Funko.Client.csproj",
-      "packagesPath": "C:\\Users\\Marcos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funko.Client\\obj\\",
+      "projectPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funko.Client\\Funko.Client.csproj",
+      "packagesPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.nuget\\packages\\",
+      "outputPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funko.Client\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Marcos\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "D:\\USERS_NO_BORRAR\\marcos.jodar1\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
@@ -2108,6 +2108,7 @@
       },
       "frameworks": {
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {}
         }
@@ -2126,6 +2127,7 @@
     },
     "frameworks": {
       "net10.0": {
+        "framework": "net10.0",
         "targetAlias": "net10.0",
         "dependencies": {
           "Microsoft.AspNetCore.App.Internal.Assets": {
@@ -2178,7 +2180,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

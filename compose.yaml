@@ -8,7 +8,15 @@
       - "5000:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      # Sobrescribimos para que apunte a los nombres de los contenedores en Docker
+      - ConnectionStrings__DefaultConnection=Host=posgresql;Port=5432;Database=FunkosDb;Username=admin;Password=admin123
+      - MongoDbSettings__ConnectionString=mongodb://admin:admin123@mongo:27017/ProvDb?authSource=admin
+      - Redis__ConnectionString=redis:6379,password=miPassword123
     depends_on:
+      posgresql:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
       redis:
         condition: service_healthy
     restart: unless-stopped

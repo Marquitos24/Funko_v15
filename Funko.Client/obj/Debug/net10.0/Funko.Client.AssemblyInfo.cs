@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Funko.Client")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a01f7f3260d72e4d7f809e0d59ee17a0b4e1e6a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+414139c593a0b80be4db85cf612a49c7c9948f17")]
 [assembly: System.Reflection.AssemblyProductAttribute("Funko.Client")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Funko.Client")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

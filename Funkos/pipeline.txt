@@ -3,3 +3,553 @@
 |------------------|        |------------------|        |------------------|        |------------------|        |------------------|        |------------------|        |------------------|        |------------------|   
 |     PETICION     | ---->  |       HTTP       | ---->  |      Errores     | ---->  |     Routing      | ---->  |    EndPoint      | ---->  |     RESPUESTA    | ---->  |                  | ---->  |                  | ---->
 |__________________|        |__________________|        |__________________|        |__________________|        |__________________|        |__________________|        |__________________|        |__________________|
+
+
+Me meto en la carpeta del proyecto en la terminal y ejecuto --> dotnet user-secrets init (vínculo oculto en el ordenador)
+
+Guardo un secreto con un comando --> dotnet user-secrets set "Jwt:Secret" "mi-super-clave-secreta-que-nadie-debe-ver"
+
+Se guarda en un archivo JSON del SO (EJ: Dentro de C:\Users\tu-usuario\AppData\Roaming\Microsoft\UserSecrets\...). 
+Como no está dentro de tu proyecto, Git jamás lo subirá a GitHub.
+ .NET lo lee Automáticamente. 
+ Cuando la App arranque en modo Development, .NET mira en appsettings.json, 
+ luego en appsettings.Development.json y también mira en tu almacén de User Secrets, 
+ sobreescribiendo lo que haga falta de forma transparente.
+ 
+ Al abrir la terminal (PowerShell) antes de ejecutar la app en producción y pones:
+ $env:Jwt__Secret = "clave-de-produccion-ultrasegura"
+ 
+ ASP.NET Core interceptará esa variable de entorno y se la asignará automáticamente a 
+ Jwt:Secret en tu IConfiguration, sin que tengas que cambiar nada de código.
+ 
+ 
+ 
+ INICIAR APP DESARROLLO ==> $env:ASPNETCORE_ENVIRONMENT = "Development"
+                            dotnet run
+  DOCKER-COMPOSE ==> docker compose -u up 
+                            
+ INICIAR APP PRODUCCION ==> $env:ASPNETCORE_ENVIRONMENT = "Production"
+                            dotnet run --no-launch-profile
+ DOCKER-COMPOSE ==> docker compose -f docker-compose.prod.yml up -d
+ 
+ DOCKER.COMPOSE de Produccion:
+ version: '3.8'
+ 
+ services:
+   funkos:
+     image: tuusuario/funkos-api:latest
+     container_name: funkos_api_prod
+     ports:
+       - "80:8080"
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Production
+       # Conexiones apuntando a los nombres de los servicios internos con contraseñas seguras desde variables de entorno
+       - ConnectionStrings__DefaultConnection=Host=posgresql;Port=5432;Database=FunkosDb;Username=admin;Password=${PROD_PG_PASSWORD}
+       - MongoDbSettings__ConnectionString=mongodb://admin:${PROD_MONGO_PASSWORD}@mongo:27017/ProvDb?authSource=admin
+       - Redis__ConnectionString=redis:6379,password=${PROD_REDIS_PASSWORD}
+       - Jwt__Secret=${PROD_JWT_SECRET}
+     depends_on:
+       posgresql:
+         condition: service_healthy
+       mongo:
+         condition: service_healthy
+       redis:
+         condition: service_healthy
+     restart: always
+ 
+   posgresql:
+     image: postgres:16
+     container_name: postgres_prod
+     # SIN puertos expuestos al exterior por seguridad
+     environment:
+       POSTGRES_USER: admin
+       POSTGRES_PASSWORD: ${PROD_PG_PASSWORD}
+       POSTGRES_DB: FunkosDb
+     volumes:
+       - postgre-prod-data:/var/lib/postgresql/data
+     healthcheck:
+       test: ["CMD-SHELL", "pg_isready -U admin -d FunkosDb"]
+       interval: 10s
+       timeout: 5s
+       retries: 5
+     restart: always
+ 
+   mongo:
+     image: mongo:8
+     container_name: mongo_prod
+     # SIN puertos expuestos al exterior por seguridad
+     environment:
+       MONGO_INITDB_ROOT_USERNAME: admin
+       MONGO_INITDB_ROOT_PASSWORD: ${PROD_MONGO_PASSWORD}
+     volumes:
+       - mongo-prod-data:/data/db
+     healthcheck:
+       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+       interval: 10s
+       timeout: 5s
+       retries: 5
+     restart: always
+ 
+   redis:
+     image: redis:7-alpine
+     container_name: redis_prod
+     # SIN puertos expuestos al exterior por seguridad
+     command: redis-server --requirepass "${PROD_REDIS_PASSWORD}" --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+     volumes:
+       - redis-prod-data:/data
+     healthcheck:
+       test: ["CMD", "redis-cli", "-a", "${PROD_REDIS_PASSWORD}", "ping"]
+       interval: 10s
+       timeout: 5s
+       retries: 5
+     restart: always
+ 
+ volumes:
+   mongo-prod-data:
+   redis-prod-data:
+   postgre-prod-data:
+ 
+ 
+ 
+ Program:
+ var builder = WebApplication.CreateBuilder(args);
+ 
+ builder.Services.AddApplicationServices(builder.Configuration);
+ builder.Services.AddProblemDetails();
+ 
+ builder.WebHost.ConfigureKestrel(options => 
+ {
+     options.Limits.MaxConcurrentConnections = 1000;          
+     options.Limits.MaxConcurrentUpgradedConnections = 1000;  
+ });
+ 
+ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+ 
+ builder.Services.AddControllers()
+     .AddJsonOptions(options =>
+     {
+         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+     });
+ 
+ // Limite de Kestrel para imágenes (Ajustado de forma limpia)
+ builder.WebHost.ConfigureKestrel(options =>
+ {
+     options.Limits.MaxRequestBodySize = 10 * 1024 * 1024; // 10 MB
+ });
+ 
+ Log.Logger = new LoggerConfiguration()
+     .ReadFrom.Configuration(builder.Configuration)
+     .CreateLogger();
+ 
+ builder.Host.UseSerilog();
+ 
+ var app = builder.Build();
+ 
+ // Seed de datos condicional: en producción a veces se omite o se maneja por migraciones
+ using (var scope = app.Services.CreateScope())
+ {
+     await SeedIdentityData.SeedAsync(scope.ServiceProvider);
+ }
+ 
+ // Comportamiento condicional de errores según el entorno
+ if (app.Environment.IsDevelopment())
+ {
+     app.UseDeveloperExceptionPage();
+ }
+ else
+ {
+     app.UseExceptionHandler("/Error");
+     app.UseHsts();
+ }
+ 
+ app.UseAuthentication();  
+ app.UseAuthorization();   
+ 
+ app.MapHub<NotificacionesHub>("/hubs/notificaciones").RequireAuthorization(); 
+ 
+ app.UseStaticFiles();
+ 
+ app.UseRateLimiter();
+ app.UseMiddleware<RateLimitMiddleware>();
+ 
+ // CORS condicional o basado en política estricta de producción
+ app.UseCors(app.Environment.IsDevelopment() ? "ClientesDev" : "ClientesProd");
+ 
+ app.MapGraphQL("/graphql");
+ app.MapControllers();
+ 
+ app.Run();
+ 
+ 
+ DI---------------------------------------------------------------------------------------------------
+ namespace Funkos.Infrastructure;
+ 
+ public static class ApplicationInfraestructure
+ {
+     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+     {
+         // ... (Tus repositorios y servicios CRUD se quedan igual)
+         #region Repositorios y Servicios CRUD
+         services.AddScoped<IFunkoRepository, FunkoRepository>();
+         services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+         services.AddScoped<IProveedorRepository, ProveedorRepository>();
+         
+         services.AddScoped<FunkoService>();
+         services.AddScoped<ProveedorService>();
+         services.AddScoped<CategoriaService>();
+         #endregion
+ 
+         #region VALIDACIONES
+         services.AddValidatorsFromAssemblyContaining<ProveedorUpdateValidation>();
+         #endregion
+ 
+         #region Decorator
+         services.AddScoped<IFunkoService>(sp => new CachedFunkoServiceDecorator(sp.GetRequiredService<FunkoService>(), sp.GetRequiredService<ICacheService>(), sp.GetRequiredService<ILogger<CachedFunkoServiceDecorator>>()));
+         services.AddScoped<ICategoriaService>(sp => new CachedCategoriaServiceDecorator(sp.GetRequiredService<CategoriaService>(), sp.GetRequiredService<ICacheService>(), sp.GetRequiredService<ILogger<CachedCategoriaServiceDecorator>>()));
+         services.AddScoped<IProveedorService>(sp => new CachedProveedorServiceDecorator(sp.GetRequiredService<ProveedorService>(), sp.GetRequiredService<ICacheService>(), sp.GetRequiredService<ILogger<CachedProveedorServiceDecorator>>()));
+         #endregion
+ 
+         #region POSTGRESQL
+         var connectionString = configuration.GetConnectionString("DefaultConnection");
+         services.AddDbContext<AppDbContext>(options => 
+         {
+             options.UseNpgsql(connectionString, npgsqlOptions =>
+             {
+                 // Si no estamos en desarrollo (es producción), activamos resiliencia ante cortes de red
+                 // (Nota: necesitarás recibir 'IWebHostEnvironment env' o evaluarlo mediante el configuration o builder si se pasa, 
+                 // pero como aquí solo tenemos IConfiguration, puedes leer el entorno así:)
+             });
+         });
+         #endregion
+ 
+         #region MONGO
+         var settings = configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>()!;
+         services.AddSingleton(settings);
+         services.AddSingleton<IMongoClient>(_ => new MongoClient(settings.ConnectionString));
+         services.AddSingleton<MongoDbContext>();
+         #endregion
+ 
+         #region REDIS - CACHE
+         // Leemos la connection string directamente de la configuración (que cambiará automáticamente según appsettings.Production.json o variables de entorno)
+         var redisConnectionString = configuration["Redis:ConnectionString"]!;
+         
+         services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(redisConnectionString));
+         services.AddSingleton<ICacheService, RedisCacheService>();
+         services.Configure<CacheOptions>(configuration.GetSection(CacheOptions.SectionName));
+         services.AddStackExchangeRedisCache(options =>
+         {
+             options.Configuration = redisConnectionString;
+         });
+         #endregion
+ 
+         #region IMAGES
+         services.AddScoped<IStorageService, FileSystemStorageService>();
+         services.Configure<StorageSettings>(configuration.GetSection("Storage"));
+ 
+         services.Configure<FormOptions>(options =>
+         {
+             options.MultipartBodyLengthLimit = 10 * 1024 * 1024; // 10 MB
+         });
+         #endregion
+ 
+         #region IDENTITY Y JWT
+         services.AddIdentityCore<User>(options =>
+             {
+                 options.Password.RequireDigit = true;           
+                 options.Password.RequireLowercase = true;       
+                 options.Password.RequireUppercase = true;       
+                 options.Password.RequireNonAlphanumeric = true; 
+                 options.Password.RequiredLength = 8;            
+                 options.User.RequireUniqueEmail = true;         
+                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15); 
+                 options.Lockout.MaxFailedAccessAttempts = 5;    
+                 options.ClaimsIdentity.UserIdClaimType = JwtRegisteredClaimNames.Sub;
+             })
+             .AddRoles<Role>()
+             .AddSignInManager()
+             .AddEntityFrameworkStores<AppDbContext>()
+             .AddDefaultTokenProviders();
+ 
+         services.AddAuthentication(options =>
+             {
+                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;                 
+                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;     
+                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;        
+                 options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;           
+             })
+             .AddJwtBearer(options =>
+             {
+                 options.MapInboundClaims = false;
+                 
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuerSigningKey = true,
+                     IssuerSigningKey = new SymmetricSecurityKey(
+                         Encoding.UTF8.GetBytes(configuration["Jwt:Secret"] ?? throw new InvalidOperationException("JWT Secret no configurado"))),
+                     ValidateIssuer = true,
+                     ValidIssuer = configuration["Jwt:Issuer"],
+                     ValidateAudience = true,
+                     ValidAudience = configuration["Jwt:Audience"],
+                     ValidateLifetime = true,
+                     ClockSkew = TimeSpan.Zero,
+                     RoleClaimType = "role"
+                 };
+             });
+         #endregion
+ 
+         #region AUTORIZACIONES
+         services.AddAuthorizationBuilder()
+             .SetDefaultPolicy(
+                 new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                     .RequireAuthenticatedUser()
+                     .Build())
+             .AddPolicy("RequireAdmin", policy =>
+                 policy.RequireAssertion(context =>
+                         context.User.IsInRole("ADMIN") && context.User.HasClaim("department", "IT")))
+             .AddPolicy("RequireUser", policy =>
+                 policy.RequireRole("USER", "ADMIN"));
+         #endregion
+         
+         #region SignalR y JWT
+         services.AddSignalR().AddHubOptions<NotificacionesHub>(options =>
+         {
+             // Ocultamos errores detallados de SignalR en producción por seguridad
+             options.EnableDetailedErrors = configuration.GetValue<bool>("SignalR:EnableDetailedErrors"); 
+         })
+         .AddStackExchangeRedis(redisConnectionString, options =>
+         {
+             options.Configuration.ChannelPrefix = "FunkosApp";
+         });
+         
+         services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
+             {
+                 options.Events = new JwtBearerEvents
+                 {
+                     OnMessageReceived = context =>
+                     {
+                         var accessToken = context.Request.Query["access_token"];
+                         var path = context.HttpContext.Request.Path;
+ 
+                         if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                         {
+                             context.Token = accessToken;
+                         }
+                         return Task.CompletedTask;
+                     }
+                 };
+             });
+         #endregion
+ 
+         #region CORS (Diferenciado por entorno)
+         services.AddCors(options =>
+         {
+             // Política permisiva para desarrollo local
+             options.AddPolicy("ClientesDev", policy =>
+                 policy.WithOrigins("http://localhost:5175", "https://localhost:5175", "http://localhost:63342")
+                     .AllowAnyHeader()
+                     .AllowAnyMethod()
+                     .AllowCredentials());
+ 
+             // Política restrictiva para producción (Dominio real de la app)
+             options.AddPolicy("ClientesProd", policy =>
+                 policy.WithOrigins("https://miaplicacion.com")
+                     .AllowAnyHeader()
+                     .AllowAnyMethod()
+                     .AllowCredentials());
+         });
+         #endregion
+ 
+         #region RateLimit
+         services.AddRateLimiter(options =>
+         {
+             options.AddPolicy("api", context =>
+             {
+                 var ip = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+                 return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
+                 {
+                     PermitLimit = 100,
+                     Window = TimeSpan.FromMinutes(1),
+                     QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+                 });
+             });
+ 
+             options.AddPolicy("premium", context =>
+             {
+                 var userId = context.User.FindFirst("sub")?.Value ?? "anonymous";
+                 return RateLimitPartition.GetFixedWindowLimiter(userId, _ => new FixedWindowRateLimiterOptions
+                 {
+                     PermitLimit = 1000,
+                     Window = TimeSpan.FromMinutes(1)
+                 });
+             });
+ 
+             options.OnRejected = async (context, cancellationToken) =>
+             {
+                 context.HttpContext.Response.StatusCode = 429;
+                 await context.HttpContext.Response.WriteAsJsonAsync(new
+                 {
+                     error = "Demasiadas peticiones. Intenta de nuevo más tarde.",
+                     retryAfter = context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter) ? retryAfter.TotalSeconds : (double?)null
+                 }, cancellationToken);
+             };
+         });
+         
+         services.AddSingleton<RateLimitingState>();
+         #endregion
+ 
+         #region GRAPHQL con HotChocolate
+         var graphqlServer = services
+             .AddGraphQLServer()
+             .AddQueryType<TiendaQuery>()
+             .AddMutationType<TiendaMutation>()
+             .AddType<FunkoType>()
+             .AddType<CategoriaType>()
+             .AddType<ProveedorType>()
+             .AddSubscriptionType<Subscription>()
+             .AddType<UploadType>()
+             .AddInMemorySubscriptions()
+             .AddAuthorization()
+             .AddFiltering()
+             .AddSorting()
+             .ModifyOptions(options => options.RemoveUnreachableTypes = true)
+             .AddProjections();
+ 
+         // Control de errores e Introspección de GraphQL según configuración o entorno
+         // (En producción deshabilitamos la introspección pública para mayor seguridad)
+         var isDevelopment = configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development";
+         
+         graphqlServer.ModifyRequestOptions(opt =>
+         {
+             opt.IncludeExceptionDetails = isDevelopment;
+         });
+ 
+         if (!isDevelopment)
+         {
+             graphqlServer.DisableIntrospection();
+         }
+         #endregion
+         
+         return services;
+     }
+ }
+ 
+ 
+ {
+ 
+ "Logging": {
+ 
+ "LogLevel": {
+ 
+ "Default": "Information",
+ 
+ "Microsoft.AspNetCore": "Warning"
+ 
+ }
+ 
+ },
+ 
+ "AllowedHosts": "*",
+ 
+ 
+ 
+ "Application": {
+ 
+ "Name": "FunkosApi",
+ 
+ "Version": "1.0.0"
+ 
+ },
+ 
+ "ConnectionStrings": {
+ 
+ "DefaultConnection": "Host=localhost;Port=5432;Database=FunkosDb;Username=admin;Password=admin123"
+ 
+ },
+ 
+ "MongoDbSettings": {
+ 
+ "ConnectionString": "mongodb://admin:admin123@localhost:27017/ProvDb?authSource=admin",
+ 
+ "DatabaseName": "ProvDb"
+ 
+ },
+ 
+ "Cache": {
+ 
+ "DefaultExpirationMinutes": 30,
+ 
+ "SlidingExpirationMinutes": 10
+ 
+ },
+ 
+ "Redis": {
+ 
+ "ConnectionString": "localhost:6379,password=miPassword123"
+ 
+ },
+ 
+ "Storage": {
+ 
+ "UploadPath": "wwwroot/uploads",
+ 
+ "MaxFileSize": 5242880,
+ 
+ "AllowedExtensions": [".jpg", ".jpeg", ".png", ".gif", ".webp"],
+ 
+ "AllowedContentTypes": ["image/jpeg", "image/png", "image/gif", "image/webp"]
+ 
+ },
+ 
+ "Jwt": {
+ 
+ "Secret": "BICHARRACO_DE_CLAVE_SECRETA_MARCOS_EL_MEJOR_DEL_MUNDO1",
+ 
+ "Issuer": "FunkosApi",
+ 
+ "Audience": "FunkosClient"
+ 
+ },
+ 
+ "Serilog": {
+ 
+ "MinimumLevel": {
+ 
+ "Default": "Information",
+ 
+ "Override": {
+ 
+ "Microsoft": "Warning",
+ 
+ "Microsoft.EntityFrameworkCore": "Error"
+ 
+ }
+ 
+ },
+ 
+ "WriteTo": [
+ 
+ { "Name": "Console" },
+ 
+ {
+ 
+ "Name": "File",
+ 
+ "Args": {
+ 
+ "path": "logs/funkos-.log",
+ 
+ "rollingInterval": "Day",
+ 
+ "retainedFileCountLimit": 7
+ 
+ }
+ 
+ }
+ 
+ ],
+ 
+ "Enrich": ["FromLogContext", "WithMachineName", "WithThreadId"]
+ 
+ }
+ 
+ }
