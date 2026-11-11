@@ -77,5 +77,20 @@ public class CachedFunkoServiceDecorator(IFunkoService service, ICacheService ca
         }
         return result;
     }
+    
+    public async Task<Result<FunkosDtoResponse, DomainErrors>> UpdatePartialAsync(long id, FunkoPatchDto updatedFunko, CancellationToken cancellationToken)
+    {
+        var result = await service.UpdatePartialAsync(id, updatedFunko, cancellationToken);
+        if (result.IsSuccess)
+        {
+            //GetAll
+            InvalidatePagedCache();
+            logger.LogInformation("CACHE HIT: Registro GetAll Invalidado");
+            //GetId
+            await cache.RemoveAsync($"funko:{id}", cancellationToken);
+            logger.LogInformation("CACHE HIT: Registro GetById Invalidado");
+        }
+        return result;
+    }
 
 }

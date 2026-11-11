@@ -10,6 +10,10 @@
     <ItemGroup>
         <PackageReference Include="CSharpFunctionalExtensions" Version="3.7.0" />
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+        <PackageReference Include="GreenDonut" Version="16.7.5" />
+        <PackageReference Include="HotChocolate.AspNetCore" Version="16.7.5" />
+        <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="16.7.5" />
+        <PackageReference Include="HotChocolate.Data" Version="16.7.5" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.14" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.14" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
@@ -38,10 +42,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="GraphQL\DataLoaders\" />
       <Folder Include="Infrastructure\Data\" />
       <Folder Include="logs\" />
-      <Folder Include="wwwroot\.gitkeep\" />
-      <Folder Include="wwwroot\uploads\images\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\sample-data\weather.json" />
     </ItemGroup>
 
 </Project>

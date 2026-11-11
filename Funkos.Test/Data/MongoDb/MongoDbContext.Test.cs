@@ -9,7 +9,7 @@ using MongoClient = MongoDB.Driver.MongoClient;
 namespace Funkos.Test.Data.MongoDb;
 
 [TestFixture]
-public class MongoDbContext_Test
+public class MongoDbContextTest
 {
     private MongoDbContainer _mongoContainer = null!;
     private string _connectionString = null!;

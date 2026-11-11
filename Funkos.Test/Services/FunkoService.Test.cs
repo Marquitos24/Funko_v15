@@ -21,6 +21,7 @@ public class FunkoServiceTest
     private Mock<IFunkoRepository> _mockFunkoRepository = null!;
     private Mock<IValidator<FunkoCreateDto>> _mockValidatorCreate = null!;
     private Mock<IValidator<FunkoUpdateDto>> _mockValidatorUpdate = null!;
+    private Mock<IValidator<FunkoPatchDto>> _mockValidatorUpdatePatch = null!;
     private Mock<ILogger<FunkoService>> _mockLogger = null!;
     private Mock<IStorageService> _mockStorage = null!;
     private Mock<IHubContext<NotificacionesHub>> _mockHubContext = null!;
@@ -35,6 +36,7 @@ public class FunkoServiceTest
         _mockFunkoRepository = new Mock<IFunkoRepository>();
         _mockValidatorCreate = new Mock<IValidator<FunkoCreateDto>>();
         _mockValidatorUpdate = new Mock<IValidator<FunkoUpdateDto>>();
+        _mockValidatorUpdatePatch = new Mock<IValidator<FunkoPatchDto>>();
         _mockLogger = new Mock<ILogger<FunkoService>>();
         _mockStorage = new Mock<IStorageService>();
         _mockHubContext = new Mock<IHubContext<NotificacionesHub>>();
@@ -49,6 +51,7 @@ public class FunkoServiceTest
             _mockFunkoRepository.Object,
             _mockValidatorCreate.Object,
             _mockValidatorUpdate.Object,
+            _mockValidatorUpdatePatch.Object,
             _mockLogger.Object,
             _mockStorage.Object,
             _mockHubContext.Object
@@ -246,5 +249,57 @@ public class FunkoServiceTest
         // Assert
         resultado.IsSuccess.Should().BeTrue();
         resultado.Value.Should().BeTrue();
+    }
+    
+    [Test]
+    public async Task UpdatePartialAsync_Devuelve_SuccessAlActualizarParcialmenteCorrectamente()
+    {
+        // Arrange
+        var funkoId = 1L;
+        var dto = new FunkoPatchDto
+        {
+            Name = "Funko Actualizado Parcial",
+            Precio = 25.00m,
+            Stock = 8
+        };
+
+        var funkoExistente = new Funko
+        {
+            Id = funkoId,
+            Name = "Funko Original",
+            Precio = 15.00m,
+            Stock = 5,
+            CategoriaId = "ABC12345678",
+            ProveedorId = "prov12345678901234567890",
+            Imagen = "/uploads/funkos/default.png"
+        };
+        
+        _mockValidatorUpdatePatch
+            .Setup(v => v.ValidateAsync(It.IsAny<ValidationContext<FunkoPatchDto>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new ValidationResult());
+
+        // Configuramos el repositorio para encontrar el Funko
+        _mockFunkoRepository
+            .Setup(r => r.FindByIdAsync(funkoId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(funkoExistente);
+
+        // Configuramos el repositorio para actualizar correctamente devolviendo la entidad actualizada
+        _mockFunkoRepository
+            .Setup(r => r.UpdateAsync(funkoId, It.IsAny<Funko>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((long id, Funko f, CancellationToken _) => f);
+
+        // Act (Asumiendo que inyectas el validador de patch en el servicio o usas el mock correspondiente)
+        // Si tu servicio usa un campo separado para el patch, recuerda inicializarlo en el SetUp.
+        var resultado = await _service.UpdatePartialAsync(funkoId, dto, CancellationToken.None);
+
+        // Assert
+        resultado.IsSuccess.Should().BeTrue();
+        resultado.Value.Name.Should().Be("Funko Actualizado Parcial");
+        resultado.Value.Precio.Should().Be(25.00m);
+        resultado.Value.Stock.Should().Be(8);
+        
+        // Verificamos que se llamó al repositorio para buscar y actualizar
+        _mockFunkoRepository.Verify(r => r.FindByIdAsync(funkoId, It.IsAny<CancellationToken>()), Times.Once);
+        _mockFunkoRepository.Verify(r => r.UpdateAsync(funkoId, It.IsAny<Funko>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

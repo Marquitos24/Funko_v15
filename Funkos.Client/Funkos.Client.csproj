@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\funkos\20261107160757_b86a4bb53f854c45.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\funkos\20261108131107_d7cafb4ca88a44cd.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\funkos\20261110024435_7711c724d4fc451d.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\funkos\default.png" />
+    </ItemGroup>
+
+</Project>

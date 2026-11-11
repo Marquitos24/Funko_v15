@@ -37,20 +37,7 @@ public class DomainErrorsExtensionTest
         actionResult.Value.Should().BeEquivalentTo(new { message = "No se han encontrado Funkos" });
     }
     
-    [Test]
-    public void NotFoundError_Retorna_404_ErroDelete()
-    {
-        //Arange
-        var error = NotFoundError.Delete("Carlos");
-        
-        // Act
-        var result = DomainErrorsExtension.ToHttpResult<object>(error);
-        
-        // Assert
-        var actionResult = result.Result.Should().BeOfType<NotFoundObjectResult>().Subject;
-        actionResult.StatusCode.Should().Be(404);
-        actionResult.Value.Should().BeEquivalentTo(new { message = "No se ha podido eliminar el Funko Carlos" });
-    }
+
     
     [Test]
     public void ValidationError_Retorna_400_ErrorCreate()

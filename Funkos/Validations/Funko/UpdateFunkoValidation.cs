@@ -4,6 +4,7 @@ using Funkos.idGenerators;
 using Funkos.Repositories;
 using Funkos.Repositories.Categoria;
 using Funkos.Repositories.Proveedor;
+using IOPath = System.IO.Path;
 
 namespace Funkos.Validations;
 
@@ -60,7 +61,7 @@ public class UpdateFunkoValidation: AbstractValidator<FunkoUpdateDto>
             RuleFor(x => x.Image!.FileName)
                 .Must(fileName => 
                 {
-                    var ext = Path.GetExtension(fileName).ToLowerInvariant();
+                    var ext = IOPath.GetExtension(fileName).ToLowerInvariant();
                     return Array.Exists(_allowedExtensions, e => e == ext);
                 })
                 .WithMessage($"Formato de archivo no válido. Extensiones permitidas: {string.Join(", ", _allowedExtensions)}");

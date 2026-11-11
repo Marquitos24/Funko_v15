@@ -3,6 +3,10 @@ using System.Threading.RateLimiting;
 using FluentValidation;
 using Funkos.Cache;
 using Funkos.DbContext;
+using Funkos.GraphQL.Mutations;
+using Funkos.GraphQL.Queries;
+using Funkos.GraphQL.Subscriptions;
+using Funkos.GraphQL.Types;
 using Funkos.Infrastructure.Storage;
 using Funkos.Middleware;
 using Funkos.Models;
@@ -235,7 +239,11 @@ public static class ApplicationInfraestructure
         services.AddCors(options =>
         {
             options.AddPolicy("Clientes", policy =>
-                policy.WithOrigins("http://localhost:5175")
+                policy.WithOrigins(
+                        "http://localhost:5175", 
+                        "https://localhost:5175", 
+                        "http://localhost:63342"
+                    )
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials());  // ¡Imprescindible para SignalR!
@@ -301,6 +309,40 @@ public static class ApplicationInfraestructure
         
         // Para el Middleware
         services.AddSingleton<RateLimitingState>(); // particiones (IP + verbo + ruta)
+        #endregion
+
+        #region GRAPHQL con HotChocolate
+        services
+            .AddGraphQLServer()
+            .AddQueryType<TiendaQuery>()
+            .AddMutationType<TiendaMutation>()
+            .AddType<FunkoType>()
+            .AddType<CategoriaType>()
+            .AddType<ProveedorType>()
+            .AddSubscriptionType<Subscription>()
+            .AddType<UploadType>()
+            .AddInMemorySubscriptions()
+            .AddAuthorization()
+            .AddFiltering()
+            .AddSorting()
+            // Un solo contrato: los types se construyen sobre losDTOs y
+            // RemoveUnreachableTypes elimina del esquema cualquier tipo registrado al que ninguna operación pueda llegar.
+            // Así la introspección nunca vuelve a prometer campos que no se pueden consultar.
+            .ModifyOptions(options => options.RemoveUnreachableTypes = true)
+            /*
+             * .ModifyRequestOptions(opt =>
+            {
+                opt.IncludeExceptionDetails = IWebHostEnvironment.IsDevelopment();
+            })
+            if (!environment.IsDevelopment())
+            {
+                builder.DisableIntrospection();
+            }
+
+             */
+            .AddProjections();
+        
+
         #endregion
         
         return services;

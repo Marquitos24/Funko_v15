@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v14\\Funkos\\Funkos.csproj": {}
+    "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj": {}
   },
   "projects": {
-    "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v14\\Funkos\\Funkos.csproj": {
+    "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v14\\Funkos\\Funkos.csproj",
+        "projectUniqueName": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj",
         "projectName": "Funkos",
-        "projectPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v14\\Funkos\\Funkos.csproj",
-        "packagesPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.nuget\\packages\\",
-        "outputPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v14\\Funkos\\obj\\",
+        "projectPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj",
+        "packagesPath": "C:\\Users\\Marcos\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "D:\\USERS_NO_BORRAR\\marcos.jodar1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Marcos\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -24,7 +24,6 @@
         },
         "frameworks": {
           "net10.0": {
-            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -43,7 +42,6 @@
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "CSharpFunctionalExtensions": {
@@ -53,6 +51,22 @@
             "FluentValidation.AspNetCore": {
               "target": "Package",
               "version": "[11.3.1, )"
+            },
+            "GreenDonut": {
+              "target": "Package",
+              "version": "[16.7.5, )"
+            },
+            "HotChocolate.AspNetCore": {
+              "target": "Package",
+              "version": "[16.7.5, )"
+            },
+            "HotChocolate.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[16.7.5, )"
+            },
+            "HotChocolate.Data": {
+              "target": "Package",
+              "version": "[16.7.5, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -140,7 +154,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

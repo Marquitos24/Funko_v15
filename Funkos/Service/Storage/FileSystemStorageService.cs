@@ -3,7 +3,7 @@ using Funkos.Errors;
 using Funkos.Exceptions;
 using Funkos.Infrastructure.Storage;
 using Microsoft.Extensions.Options;
-
+using IOPath = System.IO.Path;
 namespace Funkos.Service.Storage;
 
 /// <summary>
@@ -14,7 +14,7 @@ public class FileSystemStorageService(IWebHostEnvironment env,
     ILogger<FileSystemStorageService> logger) : IStorageService
 {
     // Ruta absoluta y segura calculada basándonos en el entorno de ejecución y la configuración
-    private readonly string _rootPath = Path.GetFullPath(Path.Combine(
+    private readonly string _rootPath = IOPath.GetFullPath(IOPath.Combine(
             env.ContentRootPath ?? AppContext.BaseDirectory,
             settings.Value.RootPath));
 
@@ -29,9 +29,9 @@ public class FileSystemStorageService(IWebHostEnvironment env,
             var directories = new[]
             {
                 _rootPath,
-                Path.Combine(_rootPath, settings.Value.ImagesFolder),
-                Path.Combine(_rootPath, settings.Value.DocumentsFolder),
-                Path.Combine(_rootPath, "temp")
+                IOPath.Combine(_rootPath, settings.Value.ImagesFolder),
+                IOPath.Combine(_rootPath, settings.Value.DocumentsFolder),
+                IOPath.Combine(_rootPath, "temp")
             };
 
             // Recorrer y crear cada directorio si no existe previamente
@@ -59,7 +59,7 @@ public class FileSystemStorageService(IWebHostEnvironment env,
         if (file.Length > settings.Value.MaxFileSize) return Result.Failure<string, DomainErrors>(StorageError.BadRequest($"El archivo excede el tamaño máximo de {settings.Value.MaxFileSize / 1024 / 1024}MB"));
 
         // Validar la extensión física del archivo (.jpg, .png, etc.)
-        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        var extension = IOPath.GetExtension(file.FileName).ToLowerInvariant();
         if (!settings.Value.AllowedExtensions.Contains(extension)) return Result.Failure<string, DomainErrors>(StorageError.BadRequest($"Tipo de archivo no permitido: {extension}"));
 
         // Validar el Content-Type declarado - tipo MIME ==> Indica qué tipo de contenido tiene un archivo o dato
@@ -79,7 +79,7 @@ public class FileSystemStorageService(IWebHostEnvironment env,
         {
             return Result.Failure<string, DomainErrors>(StorageError.BadRequest(ex.Message));
         }
-        var filePath = Path.Combine(folderPath, fileName);
+        var filePath = IOPath.Combine(folderPath, fileName);
 
         // Asegurar que la carpeta de destino exista físicamente
         Directory.CreateDirectory(folderPath);
@@ -102,7 +102,7 @@ public class FileSystemStorageService(IWebHostEnvironment env,
         if (stream is null) throw new ArgumentNullException(nameof(stream));
         
         // Validar la extensión del archivo a partir de su nombre
-        var extension = Path.GetExtension(fileName).ToLowerInvariant();
+        var extension = IOPath.GetExtension(fileName).ToLowerInvariant();
         if (!settings.Value.AllowedExtensions.Contains(extension)) return Result.Failure<string, DomainErrors>(StorageError.BadRequest($"Tipo de archivo no permitido: {extension}"));
 
         // Generar nombre único y calcular ruta en disco
@@ -116,7 +116,7 @@ public class FileSystemStorageService(IWebHostEnvironment env,
         {
             return Result.Failure<string, DomainErrors>(StorageError.BadRequest(ex.Message));
         }
-        var filePath = Path.Combine(folderPath, fileNameGenerated);
+        var filePath = IOPath.Combine(folderPath, fileNameGenerated);
 
         // Crear directorio si no existe y guardar el archivo mediante copia de streams
         Directory.CreateDirectory(folderPath);
@@ -148,7 +148,7 @@ public class FileSystemStorageService(IWebHostEnvironment env,
     public string GetFilePath(string fileName, string? folder = null)
     {
         // Path.GetFileName elimina cualquier intento de inyección de rutas maliciosas en el nombre
-        return Path.Combine(GetFolderPath(folder), Path.GetFileName(fileName));
+        return IOPath.Combine(GetFolderPath(folder), IOPath.GetFileName(fileName));
     }
 
     /// <summary>
@@ -201,7 +201,7 @@ public class FileSystemStorageService(IWebHostEnvironment env,
 
         // Obtener todos los archivos de la ruta y extraer solo sus nombres
         var files = Directory.GetFiles(folderPath)
-            .Select(Path.GetFileName)!;
+            .Select(IOPath.GetFileName)!;
         
         return Task.FromResult(files);
     }
@@ -213,10 +213,10 @@ public class FileSystemStorageService(IWebHostEnvironment env,
     {
         if (string.IsNullOrEmpty(folder)) return _rootPath;
 
-        var full = Path.GetFullPath(Path.Combine(_rootPath, folder));
+        var full = IOPath.GetFullPath(IOPath.Combine(_rootPath, folder));
         
         if (!full.Equals(_rootPath, StringComparison.OrdinalIgnoreCase) &&
-            !full.StartsWith(_rootPath + Path.DirectorySeparatorChar,
+            !full.StartsWith(_rootPath + IOPath.DirectorySeparatorChar,
                 StringComparison.OrdinalIgnoreCase))
             throw new InvalidFileTypeException($"Carpeta no permitida: {folder}");
         
@@ -229,7 +229,7 @@ public class FileSystemStorageService(IWebHostEnvironment env,
     private static string GenerateFileName(string originalFileName)
     {
         // Extraer la extensión original del archivo
-        var extension = Path.GetExtension(originalFileName);
+        var extension = IOPath.GetExtension(originalFileName);
         
         // Generar un identificador único aleatorio de 16 caracteres
         var uniqueName = Guid.NewGuid().ToString("N")[..16];

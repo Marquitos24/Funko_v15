@@ -9,13 +9,13 @@ using Funkos.Models;
 using Funkos.RealTime.Notificaciones;
 using Funkos.Repositories;
 using Funkos.Service.Storage;
-using Funkos.Validations;
+using IOPath = System.IO.Path;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Funkos.Service;
 
-public class FunkoService(IFunkoRepository repository, IValidator<FunkoCreateDto> _validatorCreateAsync, IValidator<FunkoUpdateDto> _validatorUpdateAsync, ILogger<FunkoService> logger, IStorageService storage,  IHubContext<NotificacionesHub> hubContext) : IFunkoService
+public class FunkoService(IFunkoRepository repository, IValidator<FunkoCreateDto> _validatorCreateAsync, IValidator<FunkoUpdateDto> _validatorUpdateAsync, IValidator<FunkoPatchDto> _validatorUpdatePatchAsync, ILogger<FunkoService> logger, IStorageService storage,  IHubContext<NotificacionesHub> hubContext) : IFunkoService
 {
     /*
      * public async Task<Result<List<FunkosConCategoriaDtoResponse>, DomainErrors>>  GetAllAsync(CancellationToken cancellationToken)
@@ -154,7 +154,7 @@ public class FunkoService(IFunkoRepository repository, IValidator<FunkoCreateDto
             // Borramos la imagen vieja del disco si no es la por defecto
             if (!string.IsNullOrEmpty(funkoId.Imagen) && !funkoId.Imagen.EndsWith("default.png"))
             {
-                var oldFileName = Path.GetFileName(funkoId.Imagen);
+                var oldFileName = IOPath.GetFileName(funkoId.Imagen);
                 await storage.DeleteAsync(oldFileName, "funkos", cancellationToken);
             }
         }
@@ -215,7 +215,7 @@ public class FunkoService(IFunkoRepository repository, IValidator<FunkoCreateDto
             // Imagen: borramos archivo
             if (!string.IsNullOrEmpty(funkoId.Imagen) && !funkoId.Imagen.EndsWith("default.png"))
             {
-                var fileName = Path.GetFileName(funkoId.Imagen);
+                var fileName = IOPath.GetFileName(funkoId.Imagen);
                 await storage.DeleteAsync(fileName, "funkos", cancellationToken);
             }
             logger.LogWarning("Funko {id} eliminado correctamente", id);
@@ -244,5 +244,105 @@ public class FunkoService(IFunkoRepository repository, IValidator<FunkoCreateDto
             return Result.Failure<bool, DomainErrors>(FunkoError.Concurrency("El Funko ",id, "eliminado "));
         }
     }
+    
+     public async Task<Result<FunkosDtoResponse, DomainErrors>> UpdatePartialAsync(long id, FunkoPatchDto updatedFunko, CancellationToken cancellationToken)
+    {
+        if (id <= 0)
+        {
+            logger.LogWarning("ID de Funko inválido: {id}", id);
+            return Result.Failure<FunkosDtoResponse, DomainErrors>(FunkoError.NotFound(id));
+        }
+        
+        // Si la validación falla, ModelState.IsValid será false automáticamente
+        var context = new ValidationContext<FunkoPatchDto>(updatedFunko);
+        context.RootContextData["FunkoId"] = id;
+        var validationResult = await _validatorUpdatePatchAsync.ValidateAsync(context);
+        if (!validationResult.IsValid)
+        {
+            logger.LogInformation("Hay errores de validación");
+            // Si falla, mapeamos los errores de FluentValidation a tu sistema de DomainErrors
+            var errorsDescription = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+            return Result.Failure<FunkosDtoResponse, DomainErrors>(FunkoError.BadRequest(errorsDescription));
+        }
+        
+        //Buscamos el funko por Id y comprobamos si existe, si no salta error
+        var funkoId = await repository.FindByIdAsync(id, cancellationToken);
+        if (funkoId is null) { logger.LogWarning("No se encontro el Funko {id}", id); return Result.Failure<FunkosDtoResponse, DomainErrors>(FunkoError.NotFound(id));}
+        
+        // --- GESTIÓN DE LA IMAGEN EN ACTUALIZACIÓN ---
+        if (updatedFunko.Image is not null && updatedFunko.Image.Length > 0)
+        {
+            var storageResult = await storage.StoreAsync(updatedFunko.Image, "funkos", cancellationToken);
+            
+            if (storageResult.IsFailure)
+            {
+                logger.LogWarning("Error al guardar la imagen del Funko");
+                return Result.Failure<FunkosDtoResponse, DomainErrors>(storageResult.Error);
+            }
+            // Guardamos la nueva imagen
+            var fileName = storageResult.Value;
+            var oldImage = funkoId.Imagen;
+
+            funkoId.Imagen = storage.GetUrl(fileName, "funkos");
+
+            // Borramos la imagen vieja del disco si no es la por defecto
+            if (!string.IsNullOrEmpty(oldImage) && !oldImage.EndsWith("default.png"))
+            {
+                var oldFileName = IOPath.GetFileName(oldImage);
+                await storage.DeleteAsync(oldFileName, "funkos", cancellationToken);
+            }
+        }
+        
+        AplicarPatch(funkoId, updatedFunko);
+       
+       try
+       {
+           //Actualizamos Funko y comprobamos que no sea null, si lo es salta error
+           var updatedfunko = await repository.UpdateAsync(id, funkoId, cancellationToken);
+           if (updatedfunko == null) return Result.Failure<FunkosDtoResponse, DomainErrors>(FunkoError.NotFound());
+
+           //Transformamos a ResponseDTO
+           var funkoResponse = FunkoMapper.ToDtoResponse(updatedfunko);
+           logger.LogInformation("Funko {id} actualizdo correctamente", id);
+           
+           //Devolvemos
+           return Result.Success<FunkosDtoResponse, DomainErrors>(funkoResponse);
+       }
+       catch (DbUpdateConcurrencyException ex)
+       {
+           logger.LogWarning(ex, "Conflicto de concurrencia al actualizar el Funko {id}", id);
+           var entry = ex.Entries.First();
+           var databaseValues = await entry.GetDatabaseValuesAsync(cancellationToken);
+
+           if (databaseValues is null)
+           {
+               return Result.Failure<FunkosDtoResponse, DomainErrors>(CategoriaError.NotFound(id));
+           }
+           
+           return Result.Failure<FunkosDtoResponse, DomainErrors>(FunkoError.Concurrency("El Funko ",id, "modificado "));
+       }
+    }
+    /// <summary>
+    /// Aplica el patch condicional: cada campo solo se toca si el DTO trae valor
+    /// (la semantica de PATCH). Metodo puro sin estado: extraido de
+    /// UpdatePartialAsync para dejar el flujo de ese metodo lineal.
+    /// </summary>
+    private static void AplicarPatch(Funko funko, FunkoPatchDto dto) {
+        if (!string.IsNullOrWhiteSpace(dto.Name))
+            funko.Name = dto.Name;
+
+        if (dto.Precio.HasValue && dto.Precio.Value > 0)
+            funko.Precio = dto.Precio.Value;
+
+        if (dto.Stock.HasValue)
+            funko.Stock = dto.Stock.Value;
+
+        if (!string.IsNullOrWhiteSpace(dto.CategoriaId))
+            funko.CategoriaId = dto.CategoriaId;
+
+        if (!string.IsNullOrWhiteSpace(dto.ProveedorId))
+            funko.ProveedorId = dto.ProveedorId;
+    }
+
     
 }

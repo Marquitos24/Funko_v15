@@ -21,6 +21,34 @@
     &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Mappers.FunkoMapperTest.ToEntity_Ok&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=803c38d8_002De4f4_002D46f3_002D8fe6_002D051d0c4c306c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="DomainErrorsExtensionTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Errors.DomainErrorsExtensionTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Excepciones.StorageExceptionsTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Helper.CategoriaLinkHelperTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Helper.LinkHelperTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Helper.ProveedorLinkHelperTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Mappers.CategoriaMapper_Test&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Mappers.FunkoMapperTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Mappers.ProveedorMapperTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Middleware.RateLimitMiddlewareTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.RealTime.NotificacionesHubTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Repository.CategoriaRepositoryTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Repository.FunkoRepositoryTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Repository.ProveedorRepositoryTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Services.Cache.RedisCacheServiceTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Services.Decorator.CachedCategoriaServiceDecoratorTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Services.Decorator.CachedFunkoServiceDecoratorTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Services.CachedProveedorServiceDecoratorTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Services.CategoriaServiceTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Services.FileSystemStorageServiceTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Services.FunkoServiceTest.DeleteAsync_Devuelve_SuccessAlEliminarCorrectamente&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Services.ProveedorServiceTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Validations.CategoriaValidationTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Validations.ProveedorValidationTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Validations.FunkoValidationTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8c0d8c42_002Ddeab_002D41c1_002D8e41_002Dd8e997f8d187/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="FunkoMapperTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Mappers.FunkoMapperTest&lt;/TestId&gt;&#xD;
@@ -43,7 +71,14 @@
     &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Mappers.FunkoMapperTest.ToDTOResponse_Ok&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e18faa73_002D886e_002D4e3d_002D9a24_002D157faf88b558/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateFunkoValidation_Test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d7b64aca_002Dc032_002D4f5b_002Db4ca_002D872517d54f3d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="NoLinkAttributeTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Validations.NoLinkAttributeTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Data.PostgreSql.AppDbContextTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Data.MongoDb.MongoDbContextTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e18faa73_002D886e_002D4e3d_002D9a24_002D157faf88b558/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateFunkoValidation_Test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Validations.CreateFunkoValidation_Test&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::3875B0F7-3003-055F-4A58-79DD5FE07B84::net10.0::Funkos.Test.Helper.FunkoLinkHelperTest&lt;/TestId&gt;&#xD;

@@ -10,10 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // appsettings.json + appsettings.{Environment}.json + variables de entorno
 //var miConfig = builder.Configuration.GetSection("Application").Get<AppConfig>();
-    
+
+
 builder.Services.AddApplicationServices(builder.Configuration);
 
 builder.Services.AddProblemDetails();
+
+builder.WebHost.ConfigureKestrel(options => // SignalR publica bajo esta ruta: POST /hubs/productos/negotiate
+{
+    options.Limits.MaxConcurrentConnections = 1000;          // conexiones HTTP totales
+    options.Limits.MaxConcurrentUpgradedConnections = 1000;  // de ellas, las que se han convertido en WebSocket
+});
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
@@ -80,11 +87,7 @@ app.UseAuthentication();  // Primero: quien eres?
 app.UseAuthorization();   // Segundo: que puedes hacer?
 
 app.MapHub<NotificacionesHub>("/hubs/notificaciones").RequireAuthorization(); // Requiere auth para todo el Hub
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.Limits.MaxConcurrentConnections = 1000;          // conexiones HTTP totales
-    options.Limits.MaxConcurrentUpgradedConnections = 1000;  // de ellas, las que se han convertido en WebSocket
-});
+
 
 // Habilitar archivos estáticos desde wwwroot
 app.UseStaticFiles();
@@ -96,7 +99,8 @@ app.UseMiddleware<RateLimitMiddleware>();
 
 app.UseCors("Clientes");
 
-// SignalR publica bajo esta ruta: POST /hubs/productos/negotiate
+// Endpoint GraphQL
+app.MapGraphQL();
 
 app.MapControllers();
 app.Run();

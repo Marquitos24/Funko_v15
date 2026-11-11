@@ -10,7 +10,7 @@ using Testcontainers.PostgreSql;
 namespace Funkos.Test.Repository;
 
 [TestFixture]
-public class FunkoRepositoryTest
+public class FunkoRepositoryTest : IDisposable
 {
     private PostgreSqlContainer _postgresContainer = null!;
     private string _connectionString = null!;
@@ -360,5 +360,10 @@ public class FunkoRepositoryTest
 
         // Assert
         conteo.Should().Be(1);
+    }
+
+    public void Dispose()
+    {
+        throw new NotImplementedException();
     }
 }

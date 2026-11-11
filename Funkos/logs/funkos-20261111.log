@@ -1,0 +1,169 @@
+2026-11-11 16:14:53.137 +01:00 [ERR] Hosting failed to start
+System.ArgumentException: The root type `Mutation` has already been registered. (Parameter 'operation')
+   at HotChocolate.SchemaBuilder.AddRootType(ObjectType rootType, OperationType operation)
+   at HotChocolate.SchemaBuilderExtensions.AddMutationType(ISchemaBuilder builder, ObjectType queryType)
+   at HotChocolate.SchemaBuilderExtensions.AddMutationType(ISchemaBuilder builder, Action`1 configure)
+   at Microsoft.Extensions.DependencyInjection.SchemaRequestExecutorBuilderExtensions.<>c__DisplayClass65_0.<AddMutationType>b__0(ISchemaBuilder b)
+   at Microsoft.Extensions.DependencyInjection.RequestExecutorBuilderExtensions.<>c__DisplayClass2_0.<ConfigureSchema>b__1(ConfigurationContext ctx, IServiceProvider _)
+   at HotChocolate.Execution.RequestExecutorManager.OnConfigureSchemaBuilderAsync(ConfigurationContext context, IServiceProvider schemaServices, RequestExecutorSetup setup, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaAsync(ConfigurationContext context, RequestExecutorSetup setup, RequestExecutorOptions executorOptions, IServiceProvider schemaServices, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaServicesAsync(ConfigurationContext context, RequestExecutorSetup setup, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.GetExecutorAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.WarmupAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-11 16:17:51.592 +01:00 [ERR] Hosting failed to start
+System.ArgumentException: The root type `Mutation` has already been registered. (Parameter 'operation')
+   at HotChocolate.SchemaBuilder.AddRootType(ObjectType rootType, OperationType operation)
+   at HotChocolate.SchemaBuilderExtensions.AddMutationType(ISchemaBuilder builder, ObjectType queryType)
+   at HotChocolate.SchemaBuilderExtensions.AddMutationType(ISchemaBuilder builder, Action`1 configure)
+   at Microsoft.Extensions.DependencyInjection.SchemaRequestExecutorBuilderExtensions.<>c__DisplayClass65_0.<AddMutationType>b__0(ISchemaBuilder b)
+   at Microsoft.Extensions.DependencyInjection.RequestExecutorBuilderExtensions.<>c__DisplayClass2_0.<ConfigureSchema>b__1(ConfigurationContext ctx, IServiceProvider _)
+   at HotChocolate.Execution.RequestExecutorManager.OnConfigureSchemaBuilderAsync(ConfigurationContext context, IServiceProvider schemaServices, RequestExecutorSetup setup, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaAsync(ConfigurationContext context, RequestExecutorSetup setup, RequestExecutorOptions executorOptions, IServiceProvider schemaServices, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaServicesAsync(ConfigurationContext context, RequestExecutorSetup setup, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.GetExecutorAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.WarmupAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-11 16:23:02.610 +01:00 [ERR] Hosting failed to start
+HotChocolate.SchemaException: For more details look at the `Errors` property.
+
+1. The object type `TiendaQuery` has to at least define one field in order to be valid. (HotChocolate.Types.ObjectType)
+2. The object type `TiendaMutation` has to at least define one field in order to be valid. (HotChocolate.Types.ObjectType)
+3. The object type `Subscription` has to at least define one field in order to be valid. (HotChocolate.Types.ObjectType)
+
+   at HotChocolate.SchemaBuilder.Setup.CompleteSchema(SchemaBuilder builder, IDescriptorContext context, LazySchema lazySchema, TypeRegistry typeRegistry)
+   at HotChocolate.SchemaBuilder.Setup.Create(SchemaBuilder builder, LazySchema lazySchema, IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.HotChocolate.ISchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaAsync(ConfigurationContext context, RequestExecutorSetup setup, RequestExecutorOptions executorOptions, IServiceProvider schemaServices, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaServicesAsync(ConfigurationContext context, RequestExecutorSetup setup, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.GetExecutorAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.WarmupAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-11 16:27:10.361 +01:00 [ERR] Hosting failed to start
+HotChocolate.SchemaException: For more details look at the `Errors` property.
+
+1. Unable to infer or resolve a schema type from the type reference `IFormFile (Input)`.
+
+TiendaMutation.CrearProducto(input) -> CreateFunkoInput.Image -> IFormFile (HotChocolate.Types.InputObjectType<Funkos.GraphQL.Inputs.CreateFunkoInput>)
+
+   at HotChocolate.Configuration.TypeInitializer.DiscoverTypes()
+   at HotChocolate.Configuration.TypeInitializer.Initialize()
+   at HotChocolate.SchemaBuilder.Setup.InitializeTypes(SchemaBuilder builder, IDescriptorContext context, IReadOnlyList`1 types)
+   at HotChocolate.SchemaBuilder.Setup.Create(SchemaBuilder builder, LazySchema lazySchema, IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.HotChocolate.ISchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaAsync(ConfigurationContext context, RequestExecutorSetup setup, RequestExecutorOptions executorOptions, IServiceProvider schemaServices, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaServicesAsync(ConfigurationContext context, RequestExecutorSetup setup, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.GetExecutorAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.WarmupAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-11 16:28:49.144 +01:00 [ERR] Hosting failed to start
+HotChocolate.SchemaException: For more details look at the `Errors` property.
+
+1. Unable to infer or resolve a schema type from the type reference `IFormFile (Input)`.
+
+TiendaMutation.ActualizarFunko(input) -> UpdateFunkoInput.Image -> IFormFile (HotChocolate.Types.InputObjectType<Funkos.GraphQL.Inputs.UpdateFunkoInput>)
+
+   at HotChocolate.Configuration.TypeInitializer.DiscoverTypes()
+   at HotChocolate.Configuration.TypeInitializer.Initialize()
+   at HotChocolate.SchemaBuilder.Setup.InitializeTypes(SchemaBuilder builder, IDescriptorContext context, IReadOnlyList`1 types)
+   at HotChocolate.SchemaBuilder.Setup.Create(SchemaBuilder builder, LazySchema lazySchema, IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.HotChocolate.ISchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaAsync(ConfigurationContext context, RequestExecutorSetup setup, RequestExecutorOptions executorOptions, IServiceProvider schemaServices, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaServicesAsync(ConfigurationContext context, RequestExecutorSetup setup, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.GetExecutorAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.WarmupAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-11 16:30:04.830 +01:00 [ERR] Hosting failed to start
+HotChocolate.SchemaException: For more details look at the `Errors` property.
+
+1. Unable to infer or resolve a schema type from the type reference `IFormFile (Input)`.
+
+TiendaMutation.CrearProducto(input) -> CreateFunkoInput.Image -> IFormFile (HotChocolate.Types.InputObjectType<Funkos.GraphQL.Inputs.CreateFunkoInput>)
+
+   at HotChocolate.Configuration.TypeInitializer.DiscoverTypes()
+   at HotChocolate.Configuration.TypeInitializer.Initialize()
+   at HotChocolate.SchemaBuilder.Setup.InitializeTypes(SchemaBuilder builder, IDescriptorContext context, IReadOnlyList`1 types)
+   at HotChocolate.SchemaBuilder.Setup.Create(SchemaBuilder builder, LazySchema lazySchema, IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.HotChocolate.ISchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaAsync(ConfigurationContext context, RequestExecutorSetup setup, RequestExecutorOptions executorOptions, IServiceProvider schemaServices, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaServicesAsync(ConfigurationContext context, RequestExecutorSetup setup, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.GetExecutorAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.WarmupAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-11 16:45:56.349 +01:00 [ERR] Hosting failed to start
+HotChocolate.SchemaException: For more details look at the `Errors` property.
+
+1. Unable to infer or resolve a schema type from the type reference `IFormFile (Input)`.
+
+TiendaMutation.CrearProducto(input) -> CreateFunkoInput.Image -> IFormFile (HotChocolate.Types.InputObjectType<Funkos.GraphQL.Inputs.CreateFunkoInput>)
+
+   at HotChocolate.Configuration.TypeInitializer.DiscoverTypes()
+   at HotChocolate.Configuration.TypeInitializer.Initialize()
+   at HotChocolate.SchemaBuilder.Setup.InitializeTypes(SchemaBuilder builder, IDescriptorContext context, IReadOnlyList`1 types)
+   at HotChocolate.SchemaBuilder.Setup.Create(SchemaBuilder builder, LazySchema lazySchema, IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.HotChocolate.ISchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaAsync(ConfigurationContext context, RequestExecutorSetup setup, RequestExecutorOptions executorOptions, IServiceProvider schemaServices, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaServicesAsync(ConfigurationContext context, RequestExecutorSetup setup, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.GetExecutorAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.WarmupAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-11 16:48:16.419 +01:00 [ERR] Hosting failed to start
+HotChocolate.SchemaException: For more details look at the `Errors` property.
+
+1. The middleware pipeline order for the field `TiendaQuery.funkosPaged` is invalid. Middleware order is important especially with data pipelines. The correct order of a data pipeline is as follows: UseDbContext -> UsePaging -> UseProjection -> UseFiltering -> UseSorting. You may omit any of these middleware or have other middleware in between but you need to abide by the overall order. Your order is: UseProjection -> UsePaging -> UseFiltering -> UseSorting. (HotChocolate.Types.ObjectType<Funkos.GraphQL.Queries.TiendaQuery>)
+
+   at HotChocolate.Types.Interceptors.MiddlewareValidationTypeInterceptor.ValidatePipeline(TypeSystemObject type, SchemaCoordinate fieldCoordinate, IList`1 middlewareDefinitions)
+   at HotChocolate.Types.Interceptors.MiddlewareValidationTypeInterceptor.OnAfterCompleteType(ITypeCompletionContext completionContext, TypeSystemConfiguration configuration)
+   at HotChocolate.Configuration.AggregateTypeInterceptor.OnAfterCompleteType(ITypeCompletionContext completionContext, TypeSystemConfiguration configuration)
+   at HotChocolate.Types.TypeSystemObject`1.OnAfterCompleteType(ITypeCompletionContext context, TypeSystemConfiguration configuration)
+   at HotChocolate.Types.TypeSystemObject`1.CompleteType(ITypeCompletionContext context)
+   at HotChocolate.Configuration.TypeInitializer.CompleteType(RegisteredType registeredType)
+   at HotChocolate.Configuration.TypeInitializer.ProcessTypes(TypeDependencyFulfilled fulfilled, Func`2 action)
+   at HotChocolate.Configuration.TypeInitializer.CompleteTypes()
+   at HotChocolate.Configuration.TypeInitializer.Initialize()
+   at HotChocolate.SchemaBuilder.Setup.InitializeTypes(SchemaBuilder builder, IDescriptorContext context, IReadOnlyList`1 types)
+   at HotChocolate.SchemaBuilder.Setup.Create(SchemaBuilder builder, LazySchema lazySchema, IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.SchemaBuilder.HotChocolate.ISchemaBuilder.Create(IDescriptorContext context)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaAsync(ConfigurationContext context, RequestExecutorSetup setup, RequestExecutorOptions executorOptions, IServiceProvider schemaServices, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateSchemaServicesAsync(ConfigurationContext context, RequestExecutorSetup setup, TypeModuleChangeMonitor typeModuleChangeMonitor, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.CreateRequestExecutorAsync(String schemaName, Boolean isInitialCreation, CancellationToken cancellationToken)
+   at HotChocolate.Execution.RequestExecutorManager.GetExecutorAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.WarmupAsync(String schemaName, CancellationToken cancellationToken)
+   at HotChocolate.AspNetCore.Warmup.RequestExecutorWarmupService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
