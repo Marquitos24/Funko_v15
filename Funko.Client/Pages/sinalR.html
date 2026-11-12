@@ -526,23 +526,23 @@
             </button>
         </div>
         <div class="subs-list">
-            <div class="sub-item" id="subCategoriaCreada">
-                CategoriaCreada
+            <div class="sub-item" id="ProveedorCreado">
+                Proveedor Creado
             </div>
-            <div class="sub-item" id="subCategoriaActualizada">
-                CategoriaActualizada
+            <div class="sub-item" id="ProveedorActualizado">
+                Proveedor Actualizado
             </div>
-            <div class="sub-item" id="subCategoriaEliminada">
-                OnCategoriaEliminada
+            <div class="sub-item" id="ProveedorEliminado">
+                Proveedor Eliminado
             </div>
-            <div class="sub-item" id="subFunkoCreado">
-                FunkoCreado
+            <div class="sub-item" id="FunkoCreado">
+                Funko Creado
             </div>
-            <div class="sub-item" id="subFunkoActualizado">
-                FunkoActualizado
+            <div class="sub-item" id="FunkoActualizado">
+                Funko Actualizado
             </div>
-            <div class="sub-item" id="subFunkoEliminado">
-                FunkoEliminado
+            <div class="sub-item" id="FunkoEliminado">
+                Funko Eliminado
             </div>
         </div>
     </div>
@@ -558,14 +558,19 @@
     <!-- Info -->
     <div class="info-box">
         <h4>Información del Sistema</h4>
-        <p>• <b>Endpoints de Hubs:</b> <code>/hubs/categorias</code> (restringido), <code>/hubs/productos</code> (público)</p>
+        <p>• <b>Endpoint de Hubs:</b> <code>/hubs/Notificaciones</code></p>
         <p>• <b>Seguridad:</b> Autenticación gestionada mediante <code>accessTokenFactory</code></p>
-        <p>• <b>Eventos de Categoría:</b> CategoriaCreada, CategoriaActualizada, CategoriaEliminada</p>
+        <p>• <b>Eventos de Proveedor:</b> ProveedorCreado, ProveedorActualizado, ProveedorEliminado</p>
         <p>• <b>Eventos de Funko:</b> FunkoCreado, FunkoActualizado, StockBajo</p>
+        <p>• <b>Notificaciones a Usuarios:</b> Un usuario normal recibe una única notificacion (FunkoCreado)</p>
+        <p>• <b>Notificaciones a Administradores:</b> Los administradores reciben TODAS las notificaciones</p>
+
+
     </div>
 </div>
 
 <script>
+    /** @type {import("@microsoft/signalr")} */
     const API_URL = 'http://localhost:5175';
     let connection = null;
 
@@ -601,6 +606,7 @@
 
             if (response.ok && data.token) {
                 document.getElementById('token').value = data.token;
+                localStorage.setItem("token", data.token);
                 status.className = 'status-item status-connected';
                 status.innerHTML = `Autenticado: ${data.user?.email || email} (${data.user?.role || 'USER'})`;
                 addMessage('SISTEMA', 'Autenticación completada con éxito. Token JWT almacenado.', 'success');
@@ -619,7 +625,7 @@
         btn.textContent = 'Iniciar Sesión';
     }
 
-    function connectSignalR() {
+    async function connectSignalR() {
         const hubUrl = document.getElementById('hubUrl').value.trim();
         const token = document.getElementById('token').value.trim();
         const btnConnect = document.getElementById('btnConnect');
@@ -640,43 +646,55 @@
             if (token) {
                 options.accessTokenFactory = () => token;
             }
+         
 
             connection = new signalR.HubConnectionBuilder()
-                .withUrl(hubUrl, options)
+                .withUrl(hubUrl, {
+                    accessTokenFactory: () => {
+                        return localStorage.getItem("token");
+                    }})
                 .withAutomaticReconnect([0, 1000, 5000, 10000])
                 .configureLogging(signalR.LogLevel.Information)
                 .build();
 
-            connection.on('CategoriaCreada', (data) => {
-                addMessage('CATEGORIA_CREADA', JSON.stringify(data, null, 2), 'received');
-                markSubActive('subCategoriaCreada');
+            connection.on('AdminConectado', (data) => {
+                addMessage('ADMIN_CONECTADO', JSON.stringify(data, null, 2), 'received');
             });
 
-            connection.on('CategoriaActualizada', (data) => {
-                addMessage('CATEGORIA_ACTUALIZADA', JSON.stringify(data, null, 2), 'received');
-                markSubActive('subCategoriaActualizada');
+            connection.on('UsuarioConectado', (data) => {
+                addMessage('USUARIO_CONECTADO', JSON.stringify(data, null, 2), 'received');
             });
 
-            connection.on('CategoriaEliminada', (data) => {
-                addMessage('CATEGORIA_ELIMINADA', JSON.stringify(data, null, 2), 'received');
-                markSubActive('subCategoriaEliminada');
+            // Registrar manejadores de eventos
+            connection.on('ProveedorCreado', (data) => {
+                addMessage('PROVEEDOR_CREADA', JSON.stringify(data, null, 2), 'received');
+                markSubActive('ProveedorCreado');
+            });
+
+            connection.on('ProveedorActualizado', (data) => {
+                addMessage('PROVEEDOR_ACTUALIZADA', JSON.stringify(data, null, 2), 'received');
+                markSubActive('ProveedorActualizado');
+            });
+
+            connection.on('ProveedorEliminado', (data) => {
+                addMessage('PROVEEDOR_ELIMINADA', JSON.stringify(data, null, 2), 'received');
+                markSubActive('ProveedorEliminado');
             });
 
             connection.on('FunkoCreado', (data) => {
                 addMessage('FUNKO_CREADO', JSON.stringify(data, null, 2), 'received');
-                markSubActive('subFunkoCreado');
+                markSubActive('FunkoCreado');
             });
 
             connection.on('FunkoActualizado', (data) => {
                 addMessage('FUNKO_ACTUALIZADO', JSON.stringify(data, null, 2), 'received');
-                markSubActive('subFunkoActualizado');
+                markSubActive('FunkoActualizado');
             });
 
             connection.on('FunkoEliminado', (data) => {
                 addMessage('FUNKO_ELIMINADO', JSON.stringify(data, null, 2), 'received');
-                markSubActive('subFunkoEliminado');
+                markSubActive('FunkoEliminado');
             });
-            
 
             connection.onclose(() => {
                 status.className = 'status-item status-disconnected';
@@ -698,26 +716,23 @@
                 addMessage('SISTEMA', 'Reconexión con el servidor establecida.', 'success');
             });
 
-            connection.start()
-                .then(() => {
-                    status.className = 'status-item status-connected';
-                    status.textContent = 'SignalR conectado';
-                    btnConnect.disabled = true;
-                    btnDisconnect.disabled = false;
-                    addMessage('SISTEMA', 'Conexión activa. Escuchando eventos del servidor.', 'success');
-                })
-                .catch((error) => {
-                    status.className = 'status-item status-disconnected';
-                    status.textContent = 'Error de conexión';
-                    btnConnect.disabled = false;
-                    addMessage('SISTEMA', 'Fallo al iniciar conexión: ' + error.message, 'error');
-                });
+            // Esperar a que la conexión se abra correctamente de forma síncrona dentro del try/catch
+            await connection.start()
+                .then(() => console.log("Conectado al Hub"))
+                .catch(err => console.error("Error de conexion:", err));
+
+            status.className = 'status-item status-connected';
+            status.textContent = 'SignalR conectado';
+            btnConnect.disabled = true;
+            btnDisconnect.disabled = false;
+            addMessage('SISTEMA', 'Conexión activa. Escuchando eventos del servidor.', 'success');
 
         } catch (error) {
             status.className = 'status-item status-disconnected';
-            status.textContent = 'Error crítico';
+            status.textContent = 'Error de conexión';
             btnConnect.disabled = false;
-            addMessage('SISTEMA', 'Error: ' + error.message, 'error');
+            btnDisconnect.disabled = true;
+            addMessage('SISTEMA', 'Fallo al iniciar conexión: ' + error.message, 'error');
         }
     }
 

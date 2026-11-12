@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos.Test\\Funkos.Test.csproj": {}
+    "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos.Test\\Funkos.Test.csproj": {}
   },
   "projects": {
-    "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos.Test\\Funkos.Test.csproj": {
+    "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos.Test\\Funkos.Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos.Test\\Funkos.Test.csproj",
+        "projectUniqueName": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos.Test\\Funkos.Test.csproj",
         "projectName": "Funkos.Test",
-        "projectPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos.Test\\Funkos.Test.csproj",
-        "packagesPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.nuget\\packages\\",
-        "outputPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos.Test\\obj\\",
+        "projectPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos.Test\\Funkos.Test.csproj",
+        "packagesPath": "C:\\Users\\Marcos\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos.Test\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "D:\\USERS_NO_BORRAR\\marcos.jodar1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Marcos\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -24,11 +24,10 @@
         },
         "frameworks": {
           "net10.0": {
-            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos\\Funkos.csproj": {
-                "projectPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos\\Funkos.csproj"
+              "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj": {
+                "projectPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj"
               }
             }
           }
@@ -47,7 +46,6 @@
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "FluentAssertions": {
@@ -107,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -385,17 +383,17 @@
         }
       }
     },
-    "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos\\Funkos.csproj": {
+    "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos\\Funkos.csproj",
+        "projectUniqueName": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj",
         "projectName": "Funkos",
-        "projectPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos\\Funkos.csproj",
-        "packagesPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.nuget\\packages\\",
-        "outputPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos\\obj\\",
+        "projectPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj",
+        "packagesPath": "C:\\Users\\Marcos\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "D:\\USERS_NO_BORRAR\\marcos.jodar1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Marcos\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -405,7 +403,6 @@
         },
         "frameworks": {
           "net10.0": {
-            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -424,7 +421,6 @@
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "CSharpFunctionalExtensions": {
@@ -537,7 +533,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

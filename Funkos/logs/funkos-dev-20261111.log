@@ -1,0 +1,28 @@
+2026-11-11 22:48:35.272 +01:00 [INF] User profile is available. Using 'C:\Users\Marcos\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-11-11 22:48:36.423 +01:00 [INF] Executed DbCommand (42ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT r."Id", r."ConcurrencyStamp", r."Description", r."Name", r."NormalizedName"
+FROM roles AS r
+WHERE r."NormalizedName" = @normalizedName
+LIMIT 1
+2026-11-11 22:48:36.534 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT r."Id", r."ConcurrencyStamp", r."Description", r."Name", r."NormalizedName"
+FROM roles AS r
+WHERE r."NormalizedName" = @normalizedName
+LIMIT 1
+2026-11-11 22:48:36.558 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@normalizedEmail='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."AccessFailedCount", u."ConcurrencyStamp", u."CreatedAt", u."Email", u."EmailConfirmed", u."IsActive", u."LastLoginAt", u."LockoutEnabled", u."LockoutEnd", u."NormalizedEmail", u."NormalizedUserName", u."PasswordHash", u."PhoneNumber", u."PhoneNumberConfirmed", u."SecurityStamp", u."TwoFactorEnabled", u."UserName"
+FROM users AS u
+WHERE u."NormalizedEmail" = @normalizedEmail
+LIMIT 2
+2026-11-11 22:48:36.620 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@normalizedEmail='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."AccessFailedCount", u."ConcurrencyStamp", u."CreatedAt", u."Email", u."EmailConfirmed", u."IsActive", u."LastLoginAt", u."LockoutEnabled", u."LockoutEnd", u."NormalizedEmail", u."NormalizedUserName", u."PasswordHash", u."PhoneNumber", u."PhoneNumberConfirmed", u."SecurityStamp", u."TwoFactorEnabled", u."UserName"
+FROM users AS u
+WHERE u."NormalizedEmail" = @normalizedEmail
+LIMIT 2
+2026-11-11 22:48:36.673 +01:00 [INF] Connecting to Redis endpoints: localhost:6379. Using Server Name: PORTµTIL_MARCOS_a0b2540654494b82898e4e3983923d32
+2026-11-11 22:48:37.569 +01:00 [INF] Now listening on: http://localhost:5175
+2026-11-11 22:48:37.572 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-11 22:48:37.572 +01:00 [INF] Hosting environment: Development
+2026-11-11 22:48:37.573 +01:00 [INF] Content root path: C:\Users\Marcos\Documents\Proyectos\Back-end\C#\Funkos\funkos
+2026-11-11 22:48:38.860 +01:00 [INF] Connected to Redis.
+2026-11-11 22:48:51.505 +01:00 [INF] Application is shutting down...

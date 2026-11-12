@@ -3,144 +3,77 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>💖 Cliente GraphQL para TiendaDAW 💖</title>
-    <link href="https://fonts.googleapis.com/css2?family=Knewave&family=Balsamiq+Sans&display=swap" rel="stylesheet">
+    <title>Cliente GraphQL - TiendaDAW Luxury</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --hk-pink: #FF69B4;
-            --hk-light-pink: #FFB6C1;
-            --hk-red: #FF1493;
-            --hk-yellow: #FFD700;
-            --hk-purple: #9370DB;
-            --hk-blue: #87CEEB;
-            --hk-green: #98FB98;
+            --luxury-black: #0A0A0A;
+            --luxury-dark: #141414;
+            --luxury-card: #1C1C1C;
+            --luxury-gold: #D4AF37;
+            --luxury-gold-light: #F3E5AB;
+            --luxury-gold-dark: #AA8C2C;
+            --luxury-border: #332E1D;
+            --luxury-text: #E5E5E5;
+            --luxury-muted: #999999;
         }
 
         body {
-            background: linear-gradient(135deg, #FFB6C1, #FFC0CB, #FFE4E1, #FFF0F5);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-            font-family: 'Balsamiq Sans', cursive, sans-serif;
+            background-color: var(--luxury-black);
+            background-image: radial-gradient(circle at 50% 0%, #1A1A1A 0%, var(--luxury-black) 70%);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--luxury-text);
             min-height: 100vh;
-            padding: 20px;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes sparkle {
-            0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
-            50% { opacity: 0.7; transform: scale(1.2) rotate(180deg); }
-        }
-
-        .floating-ribbon {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 2em;
-            animation: float 3s ease-in-out infinite;
-            z-index: 1000;
+            padding: 40px 20px;
         }
 
         .container {
-            background: linear-gradient(180deg, #FFFFFF 0%, #FFF5F8 100%);
-            border: 5px solid var(--hk-pink);
-            border-radius: 30px;
-            padding: 30px;
+            background: var(--luxury-card);
+            border: 2px solid var(--luxury-gold);
+            border-radius: 12px;
+            padding: 40px;
             width: 95%;
             max-width: 1000px;
             margin: 0 auto;
-            box-shadow:
-                    0 20px 60px rgba(255, 105, 180, 0.4),
-                    0 0 0 10px var(--hk-light-pink),
-                    inset 0 0 60px rgba(255, 182, 193, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.15);
             position: relative;
-            overflow: hidden;
-        }
-
-        .container::before {
-            content: '🎀';
-            position: absolute;
-            top: -15px;
-            left: 30px;
-            font-size: 3em;
-            animation: float 2s ease-in-out infinite;
-        }
-
-        .container::after {
-            content: '🎀';
-            position: absolute;
-            top: -15px;
-            right: 30px;
-            font-size: 3em;
-            animation: float 2s ease-in-out infinite 1s;
         }
 
         h1 {
-            color: var(--hk-pink);
+            color: var(--luxury-gold);
             text-align: center;
-            font-family: 'Knewave', cursive;
-            font-size: 2.5em;
-            text-shadow: 3px 3px var(--hk-light-pink);
-            margin-bottom: 25px;
-            position: relative;
+            font-family: 'Cinzel', serif;
+            font-size: 2.2em;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--luxury-border);
+            padding-bottom: 20px;
         }
-
-        h1::before, h1::after {
-            content: '✨';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            animation: sparkle 2s ease-in-out infinite;
-        }
-
-        h1::before { left: 20px; }
-        h1::after { right: 20px; animation-delay: 1s; }
 
         /* Login Section */
         .login-section {
-            background: linear-gradient(135deg, #FFE4EC 0%, #FFF0F5 50%, #FFE4EC 100%);
-            border: 4px solid var(--hk-pink);
-            border-radius: 25px;
-            padding: 25px;
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .login-section::before {
-            content: '🔐';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2.5em;
-            background: white;
-            padding: 5px 15px;
-            border-radius: 50%;
-            border: 3px solid var(--hk-pink);
+            background: var(--luxury-dark);
+            border: 1px solid var(--luxury-border);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
         }
 
         .login-title {
-            color: var(--hk-red);
+            color: var(--luxury-gold-light);
             text-align: center;
-            font-family: 'Knewave', cursive;
-            font-size: 1.5em;
-            margin: 15px 0 20px 0;
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
         }
 
         .login-form {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
             align-items: flex-end;
             justify-content: center;
@@ -155,136 +88,116 @@
 
         .input-group label {
             display: block;
-            color: var(--hk-red);
-            font-weight: bold;
+            color: var(--luxury-gold);
+            font-weight: 600;
             margin-bottom: 8px;
-            font-size: 1em;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .input-group input {
             width: 100%;
-            padding: 12px 15px 12px 45px;
-            border: 3px solid var(--hk-light-pink);
-            border-radius: 25px;
-            font-size: 1em;
-            font-family: 'Balsamiq Sans', cursive;
+            padding: 14px 16px;
+            border: 1px solid var(--luxury-border);
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--luxury-black);
+            color: var(--luxury-text);
             transition: all 0.3s ease;
-            background: white;
         }
 
         .input-group input:focus {
             outline: none;
-            border-color: var(--hk-pink);
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+            border-color: var(--luxury-gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
 
         .input-icon {
-            position: absolute;
-            left: 15px;
-            top: 38px;
-            font-size: 1.2em;
+            display: none; /* Oculto al quitar emojis */
         }
 
         .btn-login {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, var(--hk-pink), var(--hk-red));
-            color: white;
-            border: 3px solid var(--hk-red);
-            border-radius: 25px;
-            font-family: 'Knewave', cursive;
-            font-size: 1.2em;
+            padding: 14px 30px;
+            background: linear-gradient(135deg, var(--luxury-gold), var(--luxury-gold-dark));
+            color: var(--luxury-black);
+            border: none;
+            border-radius: 6px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1em;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-login::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.3s ease;
-        }
-
-        .btn-login:hover::before {
-            width: 200px;
-            height: 200px;
+            text-transform: uppercase;
         }
 
         .btn-login:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 15, 147, 0.5);
+            background: linear-gradient(135deg, var(--luxury-gold-light), var(--luxury-gold));
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
         }
 
         .btn-login:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
         }
 
         /* Demo Users */
         .demo-users {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 20px;
             flex-wrap: wrap;
         }
 
         .demo-user {
-            padding: 8px 15px;
-            background: linear-gradient(135deg, #E6E6FA, #DDA0DD);
-            border: 2px solid var(--hk-purple);
-            border-radius: 15px;
+            padding: 8px 16px;
+            background: var(--luxury-black);
+            border: 1px solid var(--luxury-border);
+            border-radius: 6px;
             font-size: 0.85em;
             cursor: pointer;
             transition: all 0.3s ease;
+            color: var(--luxury-text);
+            text-align: center;
         }
 
         .demo-user:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(147, 112, 219, 0.4);
+            border-color: var(--luxury-gold);
+            color: var(--luxury-gold);
         }
 
         .demo-user .role {
-            font-weight: bold;
-            color: var(--hk-purple);
+            font-weight: 600;
+            color: var(--luxury-gold);
+            font-size: 0.75em;
+            display: block;
+            margin-top: 2px;
         }
 
         /* Config Section */
         .config-section {
-            background: linear-gradient(135deg, #FFF5EE, #FFE4E1);
-            border: 4px solid var(--hk-light-pink);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: var(--luxury-dark);
+            border: 1px solid var(--luxury-border);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
         }
 
         .section-title {
-            color: var(--hk-pink);
-            font-family: 'Knewave', cursive;
-            font-size: 1.4em;
+            color: var(--luxury-gold);
+            font-family: 'Cinzel', serif;
+            font-size: 1.2em;
             text-align: center;
             margin-bottom: 15px;
-            position: relative;
+            letter-spacing: 1px;
         }
 
         .section-title::before, .section-title::after {
-            content: '🎀';
-            font-size: 0.7em;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            content: none;
         }
-
-        .section-title::before { left: 10px; }
-        .section-title::after { right: 10px; }
 
         .form-row {
             display: flex;
@@ -299,48 +212,58 @@
 
         .form-group label {
             display: block;
-            color: var(--hk-red);
-            font-weight: bold;
+            color: var(--luxury-gold);
+            font-weight: 600;
             margin-bottom: 8px;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 3px solid var(--hk-light-pink);
-            border-radius: 20px;
-            font-size: 1em;
-            font-family: 'Balsamiq Sans', cursive;
+            padding: 14px 16px;
+            border: 1px solid var(--luxury-border);
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--luxury-black);
+            color: var(--luxury-text);
             transition: all 0.3s ease;
         }
 
         .form-group input:focus, .form-group textarea:focus {
             outline: none;
-            border-color: var(--hk-pink);
-            box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+            border-color: var(--luxury-gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
 
         .token-display {
-            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
-            border: 3px solid var(--hk-purple);
-            border-radius: 15px;
+            background: var(--luxury-black);
+            border: 1px solid var(--luxury-border);
+            border-radius: 6px;
             padding: 15px;
             margin-top: 10px;
         }
 
         .token-display label {
-            color: var(--hk-purple);
-            font-weight: bold;
+            color: var(--luxury-muted);
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 5px;
         }
 
         .token-display input {
             background: transparent !important;
             border: none !important;
-            color: #00ff00;
-            font-family: 'Balsamiq Sans', cursive;
+            color: var(--luxury-gold-light);
+            font-family: 'Montserrat', sans-serif;
             font-size: 0.85em;
             padding: 0 !important;
             margin-top: 5px;
+            width: 100%;
         }
 
         .token-display input:focus {
@@ -351,99 +274,113 @@
         .quick-queries {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
             margin-bottom: 15px;
         }
 
         .btn-quick {
-            padding: 8px 18px;
-            background: linear-gradient(135deg, var(--hk-blue), #4682B4);
-            color: white;
-            border: 3px solid #4682B4;
-            border-radius: 20px;
-            font-family: 'Balsamiq Sans', cursive;
-            font-size: 0.95em;
+            padding: 10px 20px;
+            background: var(--luxury-black);
+            color: var(--luxury-gold-light);
+            border: 1px solid var(--luxury-gold-dark);
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9em;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .btn-quick:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(70, 130, 180, 0.4);
+            background: var(--luxury-gold);
+            color: var(--luxury-black);
+            border-color: var(--luxury-gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
         .btn-quick.admin {
-            background: linear-gradient(135deg, #FFB347, #FF8C00);
-            border-color: #FF8C00;
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--luxury-gold);
+            color: var(--luxury-gold);
+        }
+
+        .btn-quick.admin:hover {
+            background: var(--luxury-gold);
+            color: var(--luxury-black);
         }
 
         .btn-quick.sub {
-            background: linear-gradient(135deg, var(--hk-green), #32CD32);
-            border-color: #32CD32;
+            background: var(--luxury-black);
+            border-color: var(--luxury-border);
         }
 
         /* Editor */
         .editor-section {
-            background: linear-gradient(135deg, #FFF8DC, #FAF0E6);
-            border: 4px dashed var(--hk-yellow);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: var(--luxury-dark);
+            border: 1px solid var(--luxury-border);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
         }
 
         .editor-section textarea {
             width: 100%;
             min-height: 180px;
             padding: 15px;
-            border: 3px solid var(--hk-light-pink);
-            border-radius: 20px;
-            font-family: 'Balsamiq Sans', cursive;
+            border: 1px solid var(--luxury-border);
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
             font-size: 0.9em;
+            background: var(--luxury-black);
+            color: var(--luxury-gold-light);
             box-sizing: border-box;
             transition: all 0.3s ease;
         }
 
         .editor-section textarea:focus {
             outline: none;
-            border-color: var(--hk-pink);
-            box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+            border-color: var(--luxury-gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
 
         .btn-send {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, var(--hk-pink), var(--hk-red));
-            color: white;
-            border: 4px solid var(--hk-red);
-            border-radius: 25px;
-            font-family: 'Knewave', cursive;
-            font-size: 1.4em;
+            background: linear-gradient(135deg, var(--luxury-gold), var(--luxury-gold-dark));
+            color: var(--luxury-black);
+            border: none;
+            border-radius: 6px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.2em;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 15px;
+            text-transform: uppercase;
         }
 
         .btn-send:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 15, 147, 0.5);
+            background: linear-gradient(135deg, var(--luxury-gold-light), var(--luxury-gold));
+            box-shadow: 0 5px 25px rgba(212, 175, 55, 0.4);
         }
 
         /* Response */
         .response-section {
-            background: linear-gradient(135deg, #F0FFF0, #F5FFFA);
-            border: 4px solid var(--hk-green);
-            border-radius: 20px;
-            padding: 20px;
+            background: var(--luxury-dark);
+            border: 1px solid var(--luxury-border);
+            border-radius: 8px;
+            padding: 25px;
         }
 
         #response {
-            background: #1e1e1e;
-            border: 3px solid #333;
-            border-radius: 15px;
+            background: var(--luxury-black);
+            border: 1px solid var(--luxury-border);
+            border-radius: 6px;
             padding: 20px;
-            color: #00ff00;
-            font-family: 'Balsamiq Sans', cursive;
+            color: var(--luxury-gold-light);
+            font-family: 'Courier New', monospace;
             font-size: 0.85em;
             max-height: 350px;
             overflow-y: auto;
@@ -452,12 +389,12 @@
         }
 
         #error {
-            background: linear-gradient(135deg, #FFE4E1, #FFB6C1);
-            border: 4px solid var(--hk-red);
-            border-radius: 15px;
+            background: rgba(192, 57, 43, 0.1);
+            border: 1px solid #C0392B;
+            border-radius: 6px;
             padding: 15px;
-            color: #8B0000;
-            font-weight: bold;
+            color: #F5B7B1;
+            font-weight: 600;
             margin-top: 15px;
         }
 
@@ -466,77 +403,95 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
         .status-item {
-            padding: 10px 20px;
+            padding: 8px 18px;
             border-radius: 20px;
-            font-weight: bold;
+            font-size: 0.85em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 1px solid var(--luxury-border);
+            background: var(--luxury-dark);
+            color: var(--luxury-muted);
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .status-connected {
-            background: linear-gradient(135deg, var(--hk-green), #90EE90);
-            color: #006400;
-            border: 3px solid #228B22;
+            border-color: #27AE60;
+            color: #27AE60;
+            background: rgba(39, 174, 96, 0.05);
         }
 
         .status-disconnected {
-            background: linear-gradient(135deg, #FFB6C1, #FF69B4);
-            color: var(--hk-red);
-            border: 3px solid var(--hk-red);
+            border-color: #C0392B;
+            color: #C0392B;
+            background: rgba(192, 57, 43, 0.05);
         }
 
         .status-loading {
-            background: linear-gradient(135deg, var(--hk-yellow), #FFA500);
-            color: #8B4513;
-            border: 3px solid #DAA520;
-            animation: spin 1s linear infinite;
+            border-color: var(--luxury-gold);
+            color: var(--luxury-gold);
+            background: rgba(212, 175, 55, 0.05);
+            animation: pulse 1.5s infinite;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
         }
 
         /* Info Box */
         .info-box {
-            background: linear-gradient(135deg, #E0FFFF, #87CEEB);
-            border: 4px solid #4682B4;
-            border-radius: 15px;
-            padding: 15px;
-            margin-top: 20px;
-            font-size: 0.9em;
+            background: var(--luxury-dark);
+            border: 1px solid var(--luxury-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 25px;
+            font-size: 0.85em;
+            color: var(--luxury-muted);
         }
 
         .info-box h4 {
-            color: #191970;
+            color: var(--luxury-gold);
+            font-family: 'Cinzel', serif;
             margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
         .info-box code {
-            background: rgba(255,255,255,0.5);
-            padding: 2px 8px;
-            border-radius: 5px;
+            background: var(--luxury-black);
+            color: var(--luxury-gold-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--luxury-border);
+        }
+
+        .info-box p {
+            margin-bottom: 6px;
         }
 
         /* Scrollbar */
         #response::-webkit-scrollbar {
-            width: 12px;
+            width: 8px;
         }
 
         #response::-webkit-scrollbar-track {
-            background: #333;
-            border-radius: 10px;
+            background: var(--luxury-black);
         }
 
         #response::-webkit-scrollbar-thumb {
-            background: var(--hk-pink);
-            border-radius: 10px;
+            background: var(--luxury-border);
+            border-radius: 4px;
+        }
+
+        #response::-webkit-scrollbar-thumb:hover {
+            background: var(--luxury-gold);
         }
 
         @media (max-width: 768px) {
@@ -556,52 +511,49 @@
     </style>
 </head>
 <body>
-<div class="floating-ribbon">🎀</div>
 
 <div class="container">
-    <h1>💖 Cliente GraphQL para TiendaDAW 💖</h1>
+    <h1>Cliente GraphQL - TiendaDAW Luxury</h1>
 
     <!-- Status Bar -->
     <div class="status-bar">
         <div id="authStatus" class="status-item status-disconnected">
-            🔓 Sin autenticación
+            Sin autenticación
         </div>
         <div id="responseStatus" class="status-item status-disconnected">
-            📡 Sin consultas
+            Sin consultas
         </div>
     </div>
 
     <!-- Login Section -->
     <div class="login-section">
-        <h2 class="login-title">🔐 Iniciar Sesión para Obtener Token</h2>
+        <h2 class="login-title">Iniciar Sesión para Obtener Token</h2>
         <div class="login-form">
             <div class="input-group">
-                <label for="email">📧 Email / Usuario</label>
-                <span class="input-icon">📧</span>
+                <label for="email">Email / Usuario</label>
                 <input type="text" id="email" placeholder="admin" value="admin">
             </div>
             <div class="input-group">
-                <label for="password">🔑 Password</label>
-                <span class="input-icon">🔑</span>
+                <label for="password">Password</label>
                 <input type="password" id="password" placeholder="Contraseña" value="admin">
             </div>
             <button id="btnLogin" class="btn-login" onclick="doLogin()">
-                🎀 Login
+                Login
             </button>
         </div>
         <div class="demo-users">
-            <div class="demo-user" onclick="fillDemo('admin', 'admin')">
-                👑 Admin<br><span class="role">ADMIN</span>
+            <div class="demo-user" onclick="fillDemo('admin', 'Admin123!')">
+                Administrador<br><span class="role">ADMIN</span>
             </div>
-            <div class="demo-user" onclick="fillDemo('userdaw', 'userdaw')">
-                👤 User<br><span class="role">USER</span>
+            <div class="demo-user" onclick="fillDemo('user', 'User123!')">
+                Usuario Estándar<br><span class="role">USER</span>
             </div>
         </div>
     </div>
 
     <!-- Token Display -->
     <div class="config-section">
-        <h3 class="section-title">🔐 Token JWT (Auto-rellenado tras Login)</h3>
+        <h3 class="section-title">Token JWT (Auto-rellenado tras Login)</h3>
         <div class="token-display">
             <label for="token">Tu Token:</label>
             <input type="text" id="token" placeholder="Pega tu token aquí o usa el login arriba">
@@ -610,51 +562,51 @@
 
     <!-- Queries -->
     <div class="config-section">
-        <h3 class="section-title">📋 Queries (Públicas)</h3>
+        <h3 class="section-title">Queries (Públicas)</h3>
         <div class="quick-queries">
-            <button class="btn-quick" onclick="loadQuery('funkos')">📦 Funkos Paginados</button>
-            <button class="btn-quick" onclick="loadQuery('categorias')">📁 Categorías</button>
+            <button class="btn-quick" onclick="loadQuery('funkos')">Funkos Paginados</button>
+            <button class="btn-quick" onclick="loadQuery('categorias')">Categorías</button>
         </div>
     </div>
 
     <!-- Mutations (Admin) -->
     <div class="config-section">
-        <h3 class="section-title">🛠️ Mutations (Requiere Token Admin)</h3>
+        <h3 class="section-title">Mutations (Requiere Token Admin)</h3>
         <div class="quick-queries">
-            <button class="btn-quick admin" onclick="loadQuery('createFunko')">➕ Crear Funko</button>
-            <button class="btn-quick admin" onclick="loadQuery('updateFunko')">✏️ Actualizar Funko</button>
-            <button class="btn-quick admin" onclick="loadQuery('deleteFunko')">🗑️ Eliminar Funko</button>
+            <button class="btn-quick admin" onclick="loadQuery('createFunko')">Crear Funko</button>
+            <button class="btn-quick admin" onclick="loadQuery('updateFunko')">Actualizar Funko</button>
+            <button class="btn-quick admin" onclick="loadQuery('deleteFunko')">Eliminar Funko</button>
         </div>
     </div>
 
     <!-- Editor -->
     <div class="editor-section">
-        <h3 class="section-title">📝 Query / Mutation</h3>
+        <h3 class="section-title">Query / Mutation</h3>
         <div class="form-group">
-            <label for="query">📝 Query GraphQL:</label>
+            <label for="query">Query GraphQL:</label>
             <textarea id="query"></textarea>
         </div>
 
         <div class="form-group" style="margin-top: 15px;">
-            <label for="variables">📋 Variables (JSON):</label>
-            <textarea id="variables" rows="3" placeholder='{ "id": 1 }'></textarea>
+            <label for="variables">Variables (JSON):</label>
+            <textarea id="variables" rows="3" placeholder='{ "id" : 1}'></textarea>
         </div>
 
         <button class="btn-send" onclick="sendQuery()">
-            🚀 Enviar Consulta
+            Enviar Consulta
         </button>
     </div>
 
     <!-- Response -->
     <div class="response-section">
-        <h3 class="section-title">📬 Respuesta</h3>
-        <div id="response">💖 Waiting for magic... ✨</div>
+        <h3 class="section-title">Respuesta</h3>
+        <div id="response">Esperando respuesta del servidor...</div>
         <div id="error" style="display: none"></div>
     </div>
 
     <!-- Info -->
     <div class="info-box">
-        <h4>💡 Información</h4>
+        <h4>Información del Sistema</h4>
         <p><b>Queries:</b> Consultan el endpoint de GraphQL.</p>
         <p><b>Mutations:</b> Envían el Token JWT de Admin en la cabecera.</p>
         <p><b>Token:</b> Se auto-rellena al hacer login en <code>/api/auth/login</code>.</p>
@@ -665,66 +617,102 @@
     const API_URL = 'http://localhost:5175'; // Cambia el puerto si tu API corre en otro
 
     const queries = {
-        funkos: `query {
-  funkosPaged {
-    nodes {
-      id
-      name
-      precio
-      stock
-      categoria {
-        idY
-        name
+        funkos: `query GetFunkos($first: Int, $after: String) {
+      funkosPaged(first: $first, after: $after) {
+        nodes {
+          id
+          name
+          precio
+          stock
+          proveedorId
+          categoria {
+            idY
+            name
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
       }
-    }
-  }
-}`,
-        categorias: `{
-  categorias {
-    idY
-    name
-    descripcion
-  }
-}`,
+    }`,
+        
+        categorias: `query {
+      categorias {
+        nodes {
+          idY
+          name
+          descripcion
+        }
+      }
+    }`,
+        
         createFunko: `mutation($input: CreateFunkoInput!) {
-  crearProducto(input: $input) {
-    id
-    name
-    precio
-    stock
-  }
-}`,
+      crearFunko(input: $input) {
+        id
+        name
+        precio
+        stock
+        proveedorId
+        categoriaId
+      }
+    }`,
+        
         varsCreate: `{
+      "input": {
+        "name": "Funko Special Edition",
+        "precio": 29.99,
+        "stock": 5,
+        "categoriaId": "deUKZ4KCd9J",
+        "proveedorId": "6aea3735970e44112a37f3c7"
+      }
+    }`,
+        updateFunko: `mutation($id: Long!, $input: UpdateFunkoInput!) {
+      actualizarFunko(id: $id, input: $input) {
+        id
+        name
+        precio
+        stock
+      }
+    }`,
+        varsUpdate: `{
+      "id": 1,
+      "input": {
+        "name": "Funko Actualizado",
+        "precio": 29.99,
+        "stock": 15,
+        "categoriaId": "deUKZ4KCd9J",
+        "proveedorId": "6aea3735970e44112a37f3c7"
+      }
+    }`,
+        deleteFunko: `mutation($id: Long!) {
+  eliminarFunko(id: $id)
+}`,
+        varsDelete: `{"id": 1}`
+    };
+    const variablesTemplates = {
+        createFunko: `{
   "input": {
-    "name": "Funko Test",
-    "precio": 25.99,
-    "stock": 10,
-    "categoriaId": "TU_ID_DE_CATEGORIA",
+    "name": "Funko Special Edition",
+    "precio": 29.99,
+    "stock": 5,
+    "categoriaId": "deUKZ4KCd9J",
     "proveedorId": "6aea3735970e44112a37f3c7"
   }
 }`,
-        updateFunko: `mutation($id: Long!, $input: UpdateFunkoInput!) {
-  actualizarFunko(id: $id, input: $input) {
-    id
-    name
-    precio
-    stock
-  }
-}`,
-        varsUpdate: `{
+        updateFunko: `{
   "id": 1,
   "input": {
     "name": "Funko Actualizado",
     "precio": 29.99,
     "stock": 15,
-    "categoriaId": "TU_ID_DE_CATEGORIA",
+    "categoriaId": "deUKZ4KCd9J",
     "proveedorId": "6aea3735970e44112a37f3c7"
   }
 }`,
-        deleteFunko: `mutation($id: Long!) {
-  eliminarFunko(id: $id)
-}`,
-        varsDelete: `{"id": 1}`
+        deleteFunko: `{
+  "id": 1
+}`
     };
 
     function fillDemo(username, password) {
@@ -744,9 +732,9 @@
         }
 
         btn.disabled = true;
-        btn.textContent = '⏳ Validando...';
+        btn.textContent = 'Validando...';
         status.className = 'status-item status-loading';
-        status.textContent = '🔄 Autenticando...';
+        status.textContent = 'Autenticando...';
 
         try {
             // Apunta exactamente a tu endpoint de login en ASP.NET Core Identity
@@ -762,37 +750,57 @@
             if (response.ok && tokenValue) {
                 document.getElementById('token').value = tokenValue;
                 status.className = 'status-item status-connected';
-                status.innerHTML = `🔓 ${username} (Autenticado)`;
-                document.getElementById('response').textContent = '✅ Login exitoso! Token almacenado.\n\n' +
+                status.innerHTML = `Autenticado: ${username}`;
+                document.getElementById('response').textContent = 'Login exitoso. Token almacenado.\n\n' +
                     JSON.stringify(data, null, 2);
             } else {
                 status.className = 'status-item status-disconnected';
-                status.textContent = '🔓 Error de autenticación';
+                status.textContent = 'Error de autenticación';
                 document.getElementById('response').textContent = JSON.stringify(data, null, 2);
             }
         } catch (error) {
             status.className = 'status-item status-disconnected';
-            status.textContent = '🔓 Error de conexión';
+            status.textContent = 'Error de conexión';
             alert('No se pudo conectar al servidor en ' + API_URL);
         }
 
         btn.disabled = false;
-        btn.textContent = '🎀 Login';
+        btn.textContent = 'Login';
     }
 
     function loadQuery(type) {
         const queryEl = document.getElementById('query');
         const varsEl = document.getElementById('variables');
 
+        // 1. Cargar la query o mutation seleccionada
         if (queries[type]) {
             queryEl.value = queries[type];
+        } else {
+            queryEl.value = '';
         }
 
-        const varKey = 'vars' + type.charAt(0).toUpperCase() + type.slice(1);
-        if (queries[varKey]) {
-            varsEl.value = queries[varKey];
+        // 2. Cargar sus respectivas variables separadas, o limpiar si no usa
+        if (variablesTemplates[type]) {
+            varsEl.value = variablesTemplates[type];
         } else {
-            varsEl.value = '';
+            varsEl.value = ''; // Se limpia para funkos o categorias que no llevan variables
+        }
+
+        // 2. Construir dinámicamente la clave para buscar sus variables (ej: "funkos" -> "varsFunkos")
+        const varKey = 'vars' + type.charAt(0).toUpperCase() + type.slice(1);
+
+
+        // 3. Si existen variables para este tipo, las pinta formateadas; si no, limpia el campo
+        if (queries[varKey]) {
+            try {
+                // Intenta formatear el JSON de forma bonita y legible con sangría de 2 espacios
+                const parsedJson = JSON.parse(queries[varKey]);
+                varsEl.value = JSON.stringify(parsedJson, null, 2);
+            } catch (e) {
+                varsEl.value = queries[varKey];
+            }
+        } else {
+            varsEl.value = ''; // Se limpia si la query no requiere variables (ej: categorías)
         }
     }
 
@@ -804,7 +812,7 @@
         const responseBox = document.getElementById('response');
 
         responseStatus.className = 'status-item status-loading';
-        responseStatus.textContent = '📡 Enviando...';
+        responseStatus.textContent = 'Enviando...';
 
         let variables = null;
         if (variablesText.trim()) {
@@ -813,7 +821,7 @@
             } catch (e) {
                 alert('Las variables no tienen un formato JSON válido.');
                 responseStatus.className = 'status-item status-disconnected';
-                responseStatus.textContent = '📡 Error JSON';
+                responseStatus.textContent = 'Error JSON';
                 return;
             }
         }
@@ -833,11 +841,11 @@
             const result = await res.json();
             responseBox.textContent = JSON.stringify(result, null, 2);
             responseStatus.className = 'status-item status-connected';
-            responseStatus.textContent = '📡 Respuesta recibida';
+            responseStatus.textContent = 'Respuesta recibida';
         } catch (err) {
             responseBox.textContent = 'Error de red: ' + err.message;
             responseStatus.className = 'status-item status-disconnected';
-            responseStatus.textContent = '📡 Error de red';
+            responseStatus.textContent = 'Error de red';
         }
     }
 </script>

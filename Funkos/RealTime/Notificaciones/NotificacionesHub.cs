@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Funkos.RealTime.Notificaciones;
 
-[Authorize(Policy = "RequireAdmin")]
+[Authorize]
 public class NotificacionesHub  : Hub
 {
     
@@ -65,8 +65,15 @@ public class NotificacionesHub  : Hub
     /// </summary>
     public override async Task OnConnectedAsync()
     {
-        var userId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-        var email = Context.User!.FindFirstValue(ClaimTypes.Email);
+        var userId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier) 
+                     ?? Context.User?.FindFirstValue("sub") 
+                     ?? Context.User?.FindFirstValue("id");
+
+        // Buscamos el email intentando varias opciones comunes
+        var email = Context.User?.FindFirstValue(ClaimTypes.Email) 
+                    ?? Context.User?.FindFirstValue(ClaimTypes.Name) 
+                    ?? Context.User?.FindFirstValue("email");
+        
         var isAdmin = Context.User?.IsInRole("ADMIN") ?? false;
 
         if (userId is not null)
@@ -74,34 +81,30 @@ public class NotificacionesHub  : Hub
             // Grupo privado: solo este usuario recibe sus notificaciones
             await Groups.AddToGroupAsync(Context.ConnectionId, $"user-{userId}");
         }
-
+        // Notificar a todos que se conecto un admin y un usuario
         if (isAdmin)
         {
             // Grupo de admins: todas las notificaciones de admin
             await Groups.AddToGroupAsync(Context.ConnectionId, "admins");
+            await Clients.Group("admins").SendAsync("AdminConectado", new
+            {
+                UsuarioId = userId ?? "Desconocido",
+                Email = email ?? "Sin email",
+                Mensaje = $"El administrador {email ?? "Desconocido"} se ha conectado.",
+                FechaLogin = DateTime.UtcNow
+            });
         }
         else
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, "users");
+            await Clients.Group("users").SendAsync("UsuarioConectado", new
+            {
+                UsuarioId = userId ?? "Desconocido",
+                Email = email ?? "Sin email",
+                Mensaje = $"El Usuario {email ?? "Desconocido"} se ha conectado.",
+                FechaLogin = DateTime.UtcNow
+            });
         }
-        
-        // Notificar a todos que se conecto un admin y un usuario
-        await Clients.Group("admins").SendAsync("AdminConectado", new
-        {
-            UsuarioId = userId,
-            Email = email,
-            Mensaje = $"El administrador {email} se ha conectado.",
-            FechaLogin = DateTime.UtcNow
-        });
-        
-        await Clients.Group("users").SendAsync("UsuarioConectado", new
-        {
-            UsuarioId = userId,
-            Email = email,
-            Mensaje = $"El Usuario {email} se ha conectado.",
-            FechaLogin = DateTime.UtcNow
-        });
-
         await base.OnConnectedAsync();
     }
     

@@ -80,6 +80,7 @@ using (var scope = app.Services.CreateScope())
 {
     await SeedIdentityData.SeedAsync(scope.ServiceProvider);
 }
+app.UseCors("ClientesDev");
 
 app.UseExceptionHandler();
 
@@ -97,12 +98,11 @@ Console.WriteLine($"ContentRootPath: {app.Environment.ContentRootPath}"); // Sal
 app.UseRateLimiter();
 app.UseMiddleware<RateLimitMiddleware>();
 
-app.UseCors("Clientes");
+
 
 // Endpoint GraphQL
-app.MapGraphQL("/graphql");
-
 app.MapControllers();
+app.MapGraphQL("/graphql");
 app.Run();
 
 

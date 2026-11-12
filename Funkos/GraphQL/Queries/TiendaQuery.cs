@@ -33,7 +33,7 @@ public class TiendaQuery
     
     // Hot Chocolate construye la consulta SQL por mi en tiempo real dependiendo de lo que el cliente pida
     //SI SE PONE UN [X] ENCIMA DEL METODO NECESITAS UN IQueryable<X>
-    [UsePaging(MaxPageSize = 1, DefaultPageSize = 10)]
+    [UsePaging(MaxPageSize = 10, DefaultPageSize = 10)]
     [UseProjection] // genera la consulta excta --> Para rendimieto
     [UseFiltering]
     [UseSorting]

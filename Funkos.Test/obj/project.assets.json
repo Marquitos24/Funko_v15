@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 3,
   "targets": {
     "net10.0": {
       "BouncyCastle.Cryptography/2.7.0": {
@@ -7902,19 +7902,19 @@
     ]
   },
   "packageFolders": {
-    "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.nuget\\packages\\": {}
+    "C:\\Users\\Marcos\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos.Test\\Funkos.Test.csproj",
+      "projectUniqueName": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos.Test\\Funkos.Test.csproj",
       "projectName": "Funkos.Test",
-      "projectPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos.Test\\Funkos.Test.csproj",
-      "packagesPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.nuget\\packages\\",
-      "outputPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos.Test\\obj\\",
+      "projectPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos.Test\\Funkos.Test.csproj",
+      "packagesPath": "C:\\Users\\Marcos\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos.Test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "D:\\USERS_NO_BORRAR\\marcos.jodar1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Marcos\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
@@ -7924,11 +7924,10 @@
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos\\Funkos.csproj": {
-              "projectPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\Documents\\Funko\\Funko_v15\\Funkos\\Funkos.csproj"
+            "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj": {
+              "projectPath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos\\Funkos.csproj"
             }
           }
         }
@@ -7947,7 +7946,6 @@
     },
     "frameworks": {
       "net10.0": {
-        "framework": "net10.0",
         "targetAlias": "net10.0",
         "dependencies": {
           "FluentAssertions": {
@@ -8007,7 +8005,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "D:\\USERS_NO_BORRAR\\marcos.jodar1\\.dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -8284,5 +8282,17 @@
         }
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNetCore.SignalR.StackExchangeRedis' 10.0.14 has a known high severity vulnerability, https://github.com/advisories/GHSA-wr8v-9x5q-ggcm",
+      "libraryId": "Microsoft.AspNetCore.SignalR.StackExchangeRedis",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

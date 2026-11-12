@@ -754,3 +754,5 @@ D:\USERS_NO_BORRAR\marcos.jodar1\Documents\Funko\Funko_v15\Funkos\obj\Debug\net1
 D:\USERS_NO_BORRAR\marcos.jodar1\Documents\Funko\Funko_v15\Funkos\obj\Debug\net10.0\Funkos.pdb
 D:\USERS_NO_BORRAR\marcos.jodar1\Documents\Funko\Funko_v15\Funkos\obj\Debug\net10.0\Funkos.genruntimeconfig.cache
 D:\USERS_NO_BORRAR\marcos.jodar1\Documents\Funko\Funko_v15\Funkos\obj\Debug\net10.0\ref\Funkos.dll
+C:\Users\Marcos\Documents\Proyectos\Back-end\C#\Funkos\funkos\bin\Debug\net10.0\appsettings.Development.json
+C:\Users\Marcos\Documents\Proyectos\Back-end\C#\Funkos\funkos\bin\Debug\net10.0\appsettings.Production.json

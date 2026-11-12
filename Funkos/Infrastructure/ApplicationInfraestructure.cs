@@ -39,6 +39,8 @@ public static class ApplicationInfraestructure
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
+        var isDevelopment = configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development";
+
         #region Repositorios y Servicios CRUD
         services.AddScoped<IFunkoRepository, FunkoRepository>();
         services.AddScoped<ICategoriaRepository, CategoriaRepository>();
@@ -87,7 +89,7 @@ public static class ApplicationInfraestructure
         #region REDIS - CACHE
         //IConnectionMultiplexer ==> Objeto principal de StackExchange.Redis que gestiona las conexiones con el servidor Redis.
         // Desde él se puede obtener una BD Redis
-        services.AddSingleton<IConnectionMultiplexer>(sp => ConnectionMultiplexer.Connect(
+        services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(
             configuration["Redis:ConnectionString"]!));
 
         services.AddSingleton<ICacheService, RedisCacheService>();
@@ -238,7 +240,7 @@ public static class ApplicationInfraestructure
         #region CORS
         services.AddCors(options =>
         {
-            options.AddPolicy("Clientes", policy =>
+            options.AddPolicy("ClientesDev", policy =>
                 policy.WithOrigins(
                         "http://localhost:5175", 
                         "https://localhost:5175", 
@@ -247,6 +249,13 @@ public static class ApplicationInfraestructure
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials());  // ¡Imprescindible para SignalR!
+            
+            // Política restrictiva para producción (Dominio real de la app)
+            options.AddPolicy("ClientesProd", policy =>
+                policy.WithOrigins("https://miaplicacion.com")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials());
         });
         #endregion
 
@@ -262,8 +271,7 @@ public static class ApplicationInfraestructure
                 
                 // Crea una partición de límite de tasa basada en la IP utilizando una ventana fija (Fixed Window)
                 return RateLimitPartition.GetFixedWindowLimiter(
-                    ip,
-                    partition => new FixedWindowRateLimiterOptions
+                    ip, _ => new FixedWindowRateLimiterOptions
                     {
                         PermitLimit = 100,                                    // Máximo de 100 peticiones permitidas por ventana de tiempo
                         Window = TimeSpan.FromMinutes(1),                     // Duración de la ventana de tiempo (1 minuto)
@@ -279,8 +287,7 @@ public static class ApplicationInfraestructure
                 
                 // Crea una partición de límite de tasa usando el ID del usuario con una ventana fija más permisiva
                 return RateLimitPartition.GetFixedWindowLimiter(
-                    userId,
-                    partition => new FixedWindowRateLimiterOptions
+                    userId, _ => new FixedWindowRateLimiterOptions
                     {
                         PermitLimit = 1000,                  // Máximo de 1000 peticiones permitidas por ventana
                         Window = TimeSpan.FromMinutes(1)     // Duración de la ventana de tiempo (1 minuto)
@@ -312,7 +319,7 @@ public static class ApplicationInfraestructure
         #endregion
 
         #region GRAPHQL con HotChocolate
-        services
+        var graphqlServer = services
             .AddGraphQLServer()
             .AddQueryType<TiendaQuery>()
             .AddMutationType<TiendaMutation>()
@@ -329,18 +336,18 @@ public static class ApplicationInfraestructure
             // RemoveUnreachableTypes elimina del esquema cualquier tipo registrado al que ninguna operación pueda llegar.
             // Así la introspección nunca vuelve a prometer campos que no se pueden consultar.
             .ModifyOptions(options => options.RemoveUnreachableTypes = true)
-            /*
-             * .ModifyRequestOptions(opt =>
-            {
-                opt.IncludeExceptionDetails = IWebHostEnvironment.IsDevelopment();
-            })
-            if (!environment.IsDevelopment())
-            {
-                builder.DisableIntrospection();
-            }
-
-             */
             .AddProjections();
+        
+        // Control de errores e Introspección de GraphQL según configuración o entorno
+            graphqlServer.ModifyRequestOptions(opt =>
+            {
+                opt.IncludeExceptionDetails = isDevelopment;
+            });
+     
+            if (!isDevelopment)
+            {
+                graphqlServer.DisableIntrospection();
+            }
         
 
         #endregion
